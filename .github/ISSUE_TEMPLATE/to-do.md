@@ -2,7 +2,7 @@
 name: TO-DO
 about: Etwas muss noch besprochen/getan werden.
 title: ''
-labels: ''
+labels: TO-DO
 assignees: ''
 
 ---
