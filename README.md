@@ -1,1 +1,1 @@
-# gdw_workshop
+# Grundlagen des Webs - Praxisteil
