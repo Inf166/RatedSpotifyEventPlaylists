@@ -4,6 +4,7 @@
 |---                |---                    |---              |
 |JavaScript Modules |w3c Tutorial           | 80%             | 
 |JavaScript Errormsg|w3c Tutorial &ES6 Tut. | 0%              | 
+|API's finden       |programmable web       | 0%              |
 
 ## 07.10.2019 NodeJS & Rest Intro
 ### JavaScript
@@ -33,3 +34,7 @@ Ich habe nach wie vor grundlegende Kenntnisse zu den hier vorgestellten Themen, 
 - wiki zur dokumentation
   - warum was wie gemacht wurde
 - Unter Allgemeinen Materialien ES6 Workshop
+- Anforderungen an das Projekt:
+  - Daten aus externer Quelle in unseren Service integrieren
+  - Daten aufbereiten und dann mit Node anbieten
+- 
