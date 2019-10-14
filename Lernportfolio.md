@@ -5,6 +5,10 @@
 |JavaScript Modules |w3c Tutorial           | 80%             | 
 |JavaScript Errormsg|w3c Tutorial &ES6 Tut. | 0%              | 
 |API's finden       |programmable web       | 0%              |
+|Promises JS        |?                      | 0%              |
+
+
+
 
 ## 07.10.2019 NodeJS & Rest Intro
 ### JavaScript
