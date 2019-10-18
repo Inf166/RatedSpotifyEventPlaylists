@@ -61,38 +61,44 @@ while(x<=(currentAppRatings-1)){
 
 // --> Aufgabe 5. Funktionen Auslagern
 function calcNewRating (rating){                    // Funktion ausgelagert
-    if(rating<=maxAppRating){
-        ratings[currentAppRatings]=rating;              // Neue Bewertung eingetragen
-        let newrating = 0;
-        for(let i = 0; i<currentAppRatings; i++){
-            newrating = newrating + ratings[i];         // Alle zusammen addieren
+    let p = new Promise((resolve, reject) => {
+        let ratingIsRightInt = (rating) => Number.isInteger(rating);
+        if(ratingIsRightInt){
+            if(rating <= maxAppRating){
+                ratings[currentAppRatings]=rating;              // Neue Bewertung eingetragen
+                let newrating = 0;
+                for(let i = 0; i<currentAppRatings; i++){
+                    newrating = newrating + ratings[i];         // Alle zusammen addieren
+                }
+                currentAppRatings++;                            // Jetzt die Bewertungen um 1 neue addieren für richtige Summe
+                newrating = (newrating / currentAppRatings);    // Durchschnitt berechnen
+                currentAppRating = Math.floor(newrating);       // Boom Schakalaka
+                resolve('Bewertung erfolgreich abgeschlossen');
+                return currentAppRating;
+            } else {
+                reject('Fehler: Bewertung überschreitet die maximal erlaubte Bewertung');
+            }
+        } else {
+            reject('Fehler: Bewertung ist keine Zahl');
         }
-        currentAppRatings++;                            // Jetzt die Bewertungen um 1 neue addieren für richtige Summe
-        newrating = (newrating / currentAppRatings);    // Durchschnitt berechnen
-        currentAppRating = Math.floor(newrating);       // Boom Schakalaka
-        return currentAppRating;
-    }else {
-        console.error('Ihre Bewertung überschreitet die maximal erlaubte Bewertung oder enthält falsche Zeichen. Nutzen sie Zahlen von 0 bis '+maxAppRating+'.');
-    }
+    }).catch((message) => {
+        console.log('Please Reload Program. ' + message);
+    });
 }
 
-// // Aufgabe 3. Still going
-// rl.question('Wie würden Sie die App bewerten?', function(rating){
-//     if(rating<=maxAppRating){
-//         calcNewRating(rating);              // hier war mal die Funktion calcNewRating
-//         giveStats();
-//     } else {
-//         console.error('Ihre Bewertung überschreitet die maximal erlaubte Bewertung oder enthält falsche Zeichen. Nutzen sie Zahlen von 0 bis '+maxAppRating+'.');
-//     }
-// });
+// Aufgabe 3. Still going
+rl.question('Wie würden Sie die App bewerten?', (rating) => {
+        calcNewRating(rating);              // hier war mal die Funktion calcNewRating
+        giveStats();
+});
 
 // Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
-rl.question('Wie viele Bewertungen sollen generiert werden?', function(n){
-    for(let mebeme = 0; mebeme<n; mebeme++){
-        let mesee = Math.floor((Math.random() * 5));
-        console.log(mesee);
-        calcNewRating(mesee);
-        giveStats();
-    }
-});
+// rl.question('Wie viele Bewertungen sollen generiert werden?', function(n){
+//     for(let mebeme = 0; mebeme<n; mebeme++){
+//         let mesee = Math.floor((Math.random() * 5));
+//         console.log(mesee);
+//         calcNewRating(mesee);
+//         giveStats();
+//     }
+// });
 

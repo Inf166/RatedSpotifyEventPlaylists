@@ -1,4 +1,20 @@
 # Lernportfolio - Joel Mai - 11118561 - inf166
+### Lernplan
+|Defizit            |Was kann ich tun?      |Fortschritt      | 
+|---                |---                    |---              |
+|JavaScript Basics  |Tutorials              | 100%            |
+|JavaScript Modules |w3c Tutorial           | 80%             | 
+|JavaScript Errormsg|w3c Tutorial &ES6 Tut. | 0%              | 
+|API's finden       |programmable web       | 0%              |
+|Promises JS        |Tutorials              | 85%              |
+
+- [JavaScript Basics](https://www.w3schools.com/Js/)
+- [JavaScript Promises](https://www.youtube.com/watch?v=DHvZLI7Db8E)
+- [JavaScript API's](https://www.programmableweb.com/)
+- 
+
+
+
 ## 07.10.2019 NodeJS & Rest Intro
 ### JavaScript
 Variablen sind hier ganz anders als in Java, es gibt die Datentypen:
@@ -19,19 +35,15 @@ Zusätzlich aber erst später behandelt:
 ### Aufgabenblatt und meine Einschätzung
 Ich habe nach wie vor grundlegende Kenntnisse zu den hier vorgestellten Themen, brauche jedoch noch ein wenig Auffrischung bei den Libaries von Javascript. Manchmal musste ich nach gucken wie die Modules heißen oder wie ihre Syntax ist, aber an sich kein Problem gewesen.  
 
-### Lernplan
-|Datum          |Lernziel             |Fortschritt   | 
-|---            |---                  |---  |
-|07.10.2019     |How to JavaScript    |80%  |
-|14.10.2019     |How to GitHub        |     |
-|21.10.2019     |                     |     |
-|28.10.2019     |                     |     |  
-
 ## 14.10.2019 Workshopt
-### Repo
+### Repository
 - teamrepository
 - repo soll private sein
 - issues zur kommunikation mit betreuer mario faske
 - wiki zur dokumentation
-  - was wurde verwendet und warum
+  - warum was wie gemacht wurde
+- Unter Allgemeinen Materialien ES6 Workshop
+- Anforderungen an das Projekt:
+  - Daten aus externer Quelle in unseren Service integrieren
+  - Daten aufbereiten und dann mit Node anbieten
 - 
