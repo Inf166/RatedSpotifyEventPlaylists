@@ -1,7 +1,7 @@
 //Author: Joel Mai
 //Aufgabe 1. Name ausgeben via Console
 
-console.log('Joel Mai'); // gibt meinen Namen aus
+console.log(`Joel Mai`); // gibt meinen Namen aus
 
 //Aufgabe 2. Konstante App
 
@@ -13,19 +13,19 @@ currentAppRating = 3;   // Wertzuweisung
 currentAppRatings = 3; // Wertzuweisung
 
 function shootingStars (stars){         // Diese Funktion wandelt die Number in hübsche Zeichen um
-    let output = "";
+    let output = ``;
     for(let i =0; i<stars; i++){
-        output = output.concat(' ★');
+        output = output.concat(` ★`);
     }
     return output;
 }
 
 function giveStats(){                   // Für zunkünftige Calls hier schonmal eine function
-    console.log(' ');
-    console.log('Neue Bewertung:'); 
-    console.log("Aktuelle Bewertung: " + '(' + currentAppRating + ') ' + shootingStars(currentAppRating));
-    console.log(currentAppRatings + " Bewertungen insgesamt");
-    console.log("Maximale mögliche Bewertung: " + '(' + maxAppRating + ') ' + shootingStars(maxAppRating));
+    console.log(` `);
+    console.log(`Neue Bewertung:`); 
+    console.log(`Aktuelle Bewertung: (${currentAppRating}) ${shootingStars(currentAppRating)}`);
+    console.log(`${currentAppRatings} Bewertungen insgesamt`);
+    console.log(`Maximale mögliche Bewertung: (${maxAppRating}) ${shootingStars(maxAppRating)}`);
 }
 
 giveStats();
@@ -37,7 +37,7 @@ currentAppRating++;
 giveStats();
 
 // Neuer Typ zugewisen:
-currentAppRating='> it does not break';   // let kann die kompatiblen Werte einfach annehmen 
+currentAppRating=`> it does not break`;   // let kann die kompatiblen Werte einfach annehmen 
 console.log(currentAppRating);            // nur meine Funktion würde crashen
 currentAppRating = 4;
 
@@ -46,7 +46,7 @@ currentAppRating = 4;
 // Aufgabe 3
 
 // Einbinden des readline moduls
-const readline = require('readline');  // Readline Modul einbinden für Bewertungseingabe Macht man eigentlich ganz oben im Doc
+const readline = require(`readline`);  // Readline Modul einbinden für Bewertungseingabe Macht man eigentlich ganz oben im Doc
 const rl = readline.createInterface({
 input: process.stdin,
 output: process.stdout
@@ -73,29 +73,29 @@ function calcNewRating (rating){                    // Funktion ausgelagert
                 currentAppRatings++;                            // Jetzt die Bewertungen um 1 neue addieren für richtige Summe
                 newrating = (newrating / currentAppRatings);    // Durchschnitt berechnen
                 currentAppRating = Math.floor(newrating);       // Boom Schakalaka
-                resolve('Bewertung erfolgreich abgeschlossen');
+                resolve(`Bewertung erfolgreich abgeschlossen`);
                 return currentAppRating;
             } else {
-                reject('Fehler: Bewertung überschreitet die maximal erlaubte Bewertung');
+                reject(`Fehler: Bewertung überschreitet die maximal erlaubte Bewertung`);
             }
         } else {
-            reject('Fehler: Bewertung ist keine Zahl');
+            reject(`Fehler: Bewertung ist keine Zahl`);
         }
     }).catch((message) => {
-        console.log('Please Reload Program. ' + message);
+        console.log(`Please Reload Program. ` + message);
     });
 }
 
 // Aufgabe 3. Still going
-rl.question('Wie würden Sie die App bewerten?', (rating) => {
+rl.question(`Wie würden Sie die App bewerten?`, (rating) => {
         calcNewRating(rating);              // hier war mal die Funktion calcNewRating
         giveStats();
 });
 
 // Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
-// rl.question('Wie viele Bewertungen sollen generiert werden?', function(n){
+// rl.question(`Wie viele Bewertungen sollen generiert werden?`, function(n){
 //     for(let mebeme = 0; mebeme<n; mebeme++){
-//         let mesee = Math.floor((Math.random() * 5));
+//         let mesee = Math.floor((Math.random() * (maxRating + 1)));
 //         console.log(mesee);
 //         calcNewRating(mesee);
 //         giveStats();
