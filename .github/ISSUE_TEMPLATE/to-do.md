@@ -1,8 +1,8 @@
 ---
-name: TO-DO
-about: Etwas muss noch besprochen/getan werden.
+name: To-Do
+about: Etwas muss noch besprochen/bearbeitet werden.
 title: ''
-labels: TO-DO
+labels: To-Do
 assignees: ''
 
 ---
