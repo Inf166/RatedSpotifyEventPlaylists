@@ -68,3 +68,24 @@ Was lieft schlecht?
 Fazit?
 - Alle Defizite sind aufgeholt.
 - Lernplan wird weiter verfolgt.
+
+
+# Projektidee - Angesagte Tracks für Gigs
+[Domänenmodell](https://www.draw.io/?lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Dom%C3%A4nmodell.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1nUmifaM56_n7nxeiCYORzCqlMw7wBz29%26export%3Ddownload)
+
+## Beschreibung:
+Nutzer können an eine Schnittstelle Tracks senden(über Links von Soundcloud, Beatport, Spotify, Youtube).
+Der Service zählt die Vorschläge und Metadaten der Tracks und bietet dann eine Auflistung den Nutzern an. 
+Diese Auflistung kann man mit Parametern filtern. Wie zum Beispiel Genre, Score, Thema, BeatsPerMinute.
+Aufsteigend oder Absteigend.  
+Der Service muss daher über die Links, die ID der Tracks erhalten und so über eine API-Schnittstelle 
+die notwendigen Daten von den Anbietern abfragen.  
+Als Interface für die Vorschläge dachten wir an einen Telegram-bot.  
+Als Interface für die Abfrage dachten wir an ein Scoreboard im Web über http.   
+
+## Ziel:
+Das Ziel ist es, den Musikgeist der Zeit auf einem Scoreboard abzubilden und so demokratisch wie möglich 
+Tracks aufzulisten.
+
+## Mehrwert:
+DJ's und Veranstalter können so einen Überblick über gefragte Genres und Themen erhalten und ihr Set oder Veranstaltungen anpassen.
