@@ -9,7 +9,7 @@ const maxAppRating = 5; // maximal mögliche Best-Bewertung
 var currentAppRating; // die aktuelle App Bewertung
 var currentAppRatings; // die aktuelle Anzahl der Bewertungen
 
-currentAppRating = 3;   // Wertzuweisung
+currentAppRating = 3;   // Wertzuweisung weil 'NUN' Weisen Sie diesen Variablen und ihrer Konstante nun Werte zu, mit denen sie in den folgenden Aufgaben arbeiten.
 currentAppRatings = 3; // Wertzuweisung
 
 function shootingStars (stars){         // Diese Funktion wandelt die Number in hübsche Zeichen um
@@ -61,7 +61,7 @@ while(x<=(currentAppRatings-1)){
 
 // --> Aufgabe 5. Funktionen Auslagern
 function calcNewRating (rating){                    // Funktion ausgelagert
-    let p = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         let ratingIsRightInt = (rating) => Number.isInteger(rating);
         if(ratingIsRightInt){
             if(rating <= maxAppRating){
@@ -74,31 +74,33 @@ function calcNewRating (rating){                    // Funktion ausgelagert
                 newrating = (newrating / currentAppRatings);    // Durchschnitt berechnen
                 currentAppRating = Math.floor(newrating);       // Boom Schakalaka
                 resolve('Bewertung erfolgreich abgeschlossen');
-                return currentAppRating;
             } else {
                 reject('Fehler: Bewertung überschreitet die maximal erlaubte Bewertung');
             }
         } else {
             reject('Fehler: Bewertung ist keine Zahl');
         }
-    }).catch((message) => {
-        console.log(`Please Reload Program. ${message}`);
     });
 }
 
 // Aufgabe 3. Still going
-rl.question('Wie würden Sie die App bewerten?', (rating) => {
-        calcNewRating(rating);              // hier war mal die Funktion calcNewRating
+rl.question('Wie würden Sie die App bewerten?', (rating) => {    
+    calcNewRating(rating).then((message)=>{
         giveStats();
+        console.log(message);
+    }).catch((error)=>{
+        console.log(error);
+    });              // hier war mal die Funktion calcNewRating
+        
 });
 
-// Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
-// rl.question(`Wie viele Bewertungen sollen generiert werden?`, function(n){
-//     for(let mebeme = 0; mebeme<n; mebeme++){
-//         let mesee = Math.floor((Math.random() * (maxRating + 1)));
-//         console.log(mesee);
-//         calcNewRating(mesee);
-//         giveStats();
-//     }
-// });
+//Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
+rl.question(`Wie viele Bewertungen sollen generiert werden?`, function(so){
+    for(let mebeme = 0; mebeme<so; mebeme++){
+        let mesee = Math.floor((Math.random() * (maxRating + 1)));
+        console.log(mesee);
+        calcNewRating(mesee);
+        giveStats();
+    }
+});
 
