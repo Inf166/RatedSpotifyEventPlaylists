@@ -7,8 +7,8 @@
 |JavaScript Errormsg|[JavaScript Error Messages](https://www.youtube.com/watch?v=FJQPEhMVSiY)   |14.10.2019 |Done           |
 |JavaScript Promises|[JavaScript Promises](https://www.youtube.com/watch?v=DHvZLI7Db8E)         |18.10.2019 |Done           |
 |NodeJS Tutorials   |[Node JS Tutorial](https://www.w3schools.com/nodejs/)                      |25.10.2019 | TODO          |
-|NodeJS Tutorials   |[Node JS Tutorial](https://www.w3schools.com/nodejs/)                      |25.10.2019 | TODO          |
-|NodeJS Tutorials   |[Node JS Tutorial](https://www.w3schools.com/nodejs/)                      |25.10.2019 | TODO          |
+|NodeJS Tutorials   |[Node JS Modules](https://www.w3schools.com/nodejs/nodejs_modules.asp)     |25.10.2019 | TODO          |
+|NodeJS Tutorials   |[Node JS Events](https://www.w3schools.com/nodejs/nodejs_events.asp)       |25.10.2019 | TODO          |
 
 ## 07.10.2019 NodeJS & Rest Intro
 ### JavaScript
