@@ -65,11 +65,15 @@ function calcNewRating (rating){                    // Funktion ausgelagert
         let ratingIsRightInt = (rating) => Number.isInteger(rating);
         if(ratingIsRightInt){
             if(rating <= maxAppRating){
-                ratings[currentAppRatings]=rating;              // Neue Bewertung eingetragen
+                // ratings[currentAppRatings]=rating;              // Neue Bewertung eingetragen
+                ratings.push(rating);              // Neue Bewertung eingetragen
                 let newrating = 0;
-                for(let i = 0; i<currentAppRatings; i++){
-                    newrating = newrating + ratings[i];         // Alle zusammen addieren
-                }
+                ratings.forEach((item, index, array) => {
+                    newrating += item; 
+                });
+                // for(let i = 0; i<currentAppRatings; i++){
+                //     newrating = newrating + ratings[i];         // Alle zusammen addieren
+                // }
                 currentAppRatings++;                            // Jetzt die Bewertungen um 1 neue addieren für richtige Summe
                 newrating = (newrating / currentAppRatings);    // Durchschnitt berechnen
                 currentAppRating = Math.floor(newrating);       // Boom Schakalaka
