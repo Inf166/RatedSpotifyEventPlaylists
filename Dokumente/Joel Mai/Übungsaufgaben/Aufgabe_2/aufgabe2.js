@@ -1,20 +1,42 @@
-var bewertungen = []; 
-var aktuelleBewertung = 0;
-var maxRating = 5;
+// var bewertungen = [];
 
-function Bewertung(name, bewertung){
-    this.name = name;
-    this.bewertung = bewertung;
+
+
+function Ratings(nameofrating){                                                    //Aufgabe 2
+	this.name = nameofrating;
+    this.bewertungen = [];
+    this.lastrating = () => {return `${this.bewertungen[0].name}: ${this.bewertungen[0].bewertung} Sterne`};
+    this.maxRating = 5;
+    this.aktuelleBewertung = 0;
+    this.calcNewRating =  () => {                                                   //Aufgabe 3 & 4
+        this.aktuelleBewertung = 0;
+        this.bewertungen.forEach((item) => {
+            console.log(parseInt(item.bewertung));
+            this.aktuelleBewertung += parseInt(item.bewertung); 
+        });
+        console.log(this.aktuelleBewertung);
+        this.aktuelleBewertung = this.aktuelleBewertung / this.bewertungen.length;
+        console.log(this.aktuelleBewertung);
+        return this.aktuelleBewertung;
+    };
+}	
+var ratings = new Ratings('My App');
+// var aktuelleBewertung = 0;
+// var maxRating = 5;
+
+function Bewertung(name, bewertung){												//Aufgabe 1
+    this.name = name;                                                               //Aufgabe 2
+    this.bewertung = bewertung;                                                     // In dem Eine Bewertung auch ein Objekt ist und diese im Array Ratings gespeichert werden
 }
 
-function calcNewRating(neueBewertung){
-    aktuelleBewertung = (aktuelleBewertung+neueBewertung)/2;
-}
+// function calcNewRating(neueBewertung){
+//     aktuelleBewertung = (aktuelleBewertung+neueBewertung)/2;
+// }
 
-function neueBewertung(name, bewertung){
+function neueBewertung(name, bewertung){											//Aufgabe 1
     let neueBewertung = new Bewertung(name, bewertung);
-    bewertungen.push(neueBewertung);
-    calcNewRating(neueBewertung.bewertung);
+    ratings.bewertungen.unshift(neueBewertung);
+    ratings.calcNewRating();
 }
 
 function shootingStars (stars){
@@ -26,8 +48,10 @@ function shootingStars (stars){
 }
 
 function giveRating(){
-    console.log(`Die aktuelle Bewertung ist: ${aktuelleBewertung}`);
-    console.log("Oder in Sternen:"+shootingStars(aktuelleBewertung));
+	console.log(`Aktuelle Bewertungen: ${ratings.bewertungen.length}`);				//Aufgabe 1
+	console.log(`Die letzte Bewertung ist von ${ratings.lastrating()}`);	                //Aufgabe 1
+    console.log(`Die aktuelle Bewertung ist: ${ratings.aktuelleBewertung}/${maxAppRating}`);
+    console.log('Oder in Sternen:'+shootingStars(ratings.aktuelleBewertung));
 }
 
 const readline = require('readline'); 
@@ -43,11 +67,11 @@ function askforrating(){
         if(answer){
             fresheName = answer;
             rl.question('Mit wie vielen Sternen bewerten Sie unsere App?', (answer) => {
-                if (!answer || isNaN(answer) || answer < 0 || answer > maxRating) {
+                if (!answer || isNaN(answer) || answer < 0 || answer > ratings.maxRating) {
                     console.log(`Sie haben eine ungültige Bewertung abgegeben!\nBitte bewerten Sie die App mit 0 bis ${maxRating} Sternen.`);
                 } else {
                     console.log(`Vielen Dank für Ihre Bewertung von ${answer} Sternen!`);
-                    fresheBewertung = answer;
+                    fresheBewertung = parseInt(answer, 10);
                     neueBewertung(fresheName, fresheBewertung);
                     giveRating();
                 }
@@ -60,4 +84,24 @@ function askforrating(){
     });
 }
 
-askforrating();
+// neueBewertung('Joel', 4);
+// neueBewertung('Maximilian', 3);
+// neueBewertung('Mai', 1);
+
+// askforrating();
+
+//Aufgabe 5
+//world kann ja nicht von der anderen Funktion benutzt werden weil sie ja lokal ist. also muss ich tricksen
+
+const hello = 'hello';
+
+function konkateniert(){
+    const world = 'World'; 
+    console.log(hello + ' ' + world);
+    return world;
+}
+
+function konkateniert2(){
+    console.log(konkateniert() + ' ' + hello);
+}
+konkateniert2();

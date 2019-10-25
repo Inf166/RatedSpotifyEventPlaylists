@@ -1,16 +1,18 @@
 //Author: Joel Mai
 //Aufgabe 1. Name ausgeben via Console
 
-console.log('Joel Mai'); // gibt meinen Namen aus
+// gibt meinen Namen aus
+let name = 'Joel Mai';
+console.log(`Hallo mein Name ist: ${name}`);
 
 //Aufgabe 2. Konstante App
 
-const maxAppRating = 5; // maximal mögliche Best-Bewertung
-var currentAppRating; // die aktuelle App Bewertung
-var currentAppRatings; // die aktuelle Anzahl der Bewertungen
+const maxAppRating = 5;     // maximal mögliche Best-Bewertung
+var currentAppRating;       // die aktuelle App Bewertung
+var currentAppRatings;      // die aktuelle Anzahl der Bewertungen
 
-currentAppRating = 3;   // Wertzuweisung weil 'NUN' Weisen Sie diesen Variablen und ihrer Konstante nun Werte zu, mit denen sie in den folgenden Aufgaben arbeiten.
-currentAppRatings = 3; // Wertzuweisung
+currentAppRating = 3;       // Wertzuweisung weil 'NUN' Weisen Sie diesen Variablen und ihrer Konstante nun Werte zu, mit denen sie in den folgenden Aufgaben arbeiten.
+currentAppRatings = 3;      // Wertzuweisung
 
 function shootingStars (stars){         // Diese Funktion wandelt die Number in hübsche Zeichen um
     let output = ``;
@@ -23,9 +25,8 @@ function shootingStars (stars){         // Diese Funktion wandelt die Number in 
 function giveStats(){                   // Für zunkünftige Calls hier schonmal eine function
     console.log(' ');
     console.log('Neue Bewertung:'); 
-    console.log(`Aktuelle Bewertung: (${currentAppRating}) ${shootingStars(currentAppRating)}`);
+    console.log(`Aktuelle Bewertung: (${currentAppRating}/${maxAppRating}) ${shootingStars(currentAppRating)}`);
     console.log(`${currentAppRatings} Bewertungen insgesamt`);
-    console.log(`Maximale mögliche Bewertung: (${maxAppRating}) ${shootingStars(maxAppRating)}`);
 }
 
 giveStats();
