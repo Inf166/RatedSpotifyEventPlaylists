@@ -1,0 +1,57 @@
+[
+    {
+        "stadtname": "Berlin",
+        "einwohnerzahl": 3644826,
+        "bundesland": "Berlin"
+    },
+    {
+        "stadtname": "Essen",
+        "einwohnerzahl": 583109,
+        "bundesland": "NRW"
+    },
+    {
+        "stadtname": "Aachen",
+        "einwohnerzahl": 247380,
+        "bundesland": "NRW"
+    },
+    {
+        "stadtname": "Darmstadt",
+        "einwohnerzahl": 159207,
+        "bundesland": "Hessen"
+    },
+    {
+        "stadtname": "Gera",
+        "einwohnerzahl": 94152,
+        "bundesland": "Thüringen"
+    },
+    {
+        "stadtname": "Hof",
+        "einwohnerzahl": 45930,
+        "bundesland": "Bayern"
+    },
+    {
+        "stadtname": "Brühl",
+        "einwohnerzahl": 44397,
+        "bundesland": "NRW"
+    },
+    {
+        "stadtname": "Jever",
+        "einwohnerzahl": 14301,
+        "bundesland": "Niedersachsen"
+    },
+    {
+        "stadtname": "Flöha",
+        "einwohnerzahl": 10762,
+        "bundesland": "Sachsen"
+    },
+    {
+        "name": "Düren",
+        "einwohner": "90733",
+        "bundesland": "NRW"
+    },
+    {
+        "stadtname": "Düren",
+        "einwohnerzahl": "90733",
+        "bundesland": "NRW"
+    }
+]

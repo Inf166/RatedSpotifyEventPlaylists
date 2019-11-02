@@ -1,0 +1,14 @@
+[
+    {
+        "vorname": "Max",
+        "nachname": "Mustermann",
+        "email": "max@mustermann.de",
+        "wohnort": "Düren"
+    },
+    {
+        "vorname": "Erika",
+        "nachname": "Mustermann",
+        "email": "erika@mustermann.de",
+        "wohnort": "Essen"
+    }
+]
