@@ -1,6 +1,4 @@
-// var bewertungen = [];
-
-
+var bewertungen = [];
 
 function Ratings(nameofrating){                                                    //Aufgabe 2
 	this.name = nameofrating;
@@ -22,7 +20,7 @@ function Ratings(nameofrating){                                                 
 }	
 var ratings = new Ratings('My App');
 // var aktuelleBewertung = 0;
-// var maxRating = 5;
+var maxRating = 5;
 
 function Bewertung(name, bewertung){												//Aufgabe 1
     this.name = name;                                                               //Aufgabe 2
@@ -50,7 +48,7 @@ function shootingStars (stars){
 function giveRating(){
 	console.log(`Aktuelle Bewertungen: ${ratings.bewertungen.length}`);				//Aufgabe 1
 	console.log(`Die letzte Bewertung ist von ${ratings.lastrating()}`);	                //Aufgabe 1
-    console.log(`Die aktuelle Bewertung ist: ${ratings.aktuelleBewertung}/${maxAppRating}`);
+    console.log(`Die aktuelle Bewertung ist: ${ratings.aktuelleBewertung}/${maxRating}`);
     console.log('Oder in Sternen:'+shootingStars(ratings.aktuelleBewertung));
 }
 
@@ -88,20 +86,20 @@ function askforrating(){
 // neueBewertung('Maximilian', 3);
 // neueBewertung('Mai', 1);
 
-// askforrating();
+askforrating();
 
 //Aufgabe 5
 //world kann ja nicht von der anderen Funktion benutzt werden weil sie ja lokal ist. also muss ich tricksen
 
-const hello = 'hello';
+// const hello = 'hello';
 
-function konkateniert(){
-    const world = 'World'; 
-    console.log(hello + ' ' + world);
-    return world;
-}
+// function konkateniert(){
+//     const world = 'World'; 
+//     console.log(hello + ' ' + world);
+//     return world;
+// }
 
-function konkateniert2(){
-    console.log(konkateniert() + ' ' + hello);
-}
-konkateniert2();
+// function konkateniert2(){
+//     console.log(konkateniert() + ' ' + hello);
+// }
+// konkateniert2();

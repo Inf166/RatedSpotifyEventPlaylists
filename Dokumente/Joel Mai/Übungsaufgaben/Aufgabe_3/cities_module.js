@@ -11,7 +11,7 @@ exports.getCities = () => {
     
                 var list = [];                                      // Anlegen der auzugebenden Liste
                 JSON.parse( data ).forEach(( city ) => {            // Für jedes JSON Objekt
-                    list.push( city.stadtname );                         // Einfügen in die Liste
+                    list.push( city.stadtname );                    // Einfügen in die Liste
                 });
     
                 console.log(`All Cities: ${list.join(', ')}`);      // Ausgeben der Liste
