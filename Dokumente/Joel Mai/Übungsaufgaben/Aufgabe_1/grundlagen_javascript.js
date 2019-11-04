@@ -90,22 +90,21 @@ function calcNewRating (rating){                    // Funktion ausgelagert
 
 // Aufgabe 3. Still going
 rl.question('Wie würden Sie die App bewerten?', (rating) => {    
-    calcNewRating(rating).then((message)=>{
+    calcNewRating(parseInt(rating, 10));
         giveStats();
-        console.log(message);
-    }).catch((error)=>{
-        console.log(error);
-    });              // hier war mal die Funktion calcNewRating
-        
-});
+        //Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
+            rl.question(`Wie viele Bewertungen sollen generiert werden?`, function(so){
+                for(let mebeme = 0; mebeme<parseInt(so, 10); mebeme++){
+                    let mesee = Math.floor((Math.random() * (maxAppRating + 1)));
+                    console.log(mesee);
+                    calcNewRating(mesee);
+                    giveStats();
+                    }
+                rl.close();
+                process.exit();
+            });
+        });              // hier war mal die Funktion calcNewRating
 
-//Aufgabe 4. MILLIONEN BEWERTUNGEN oder vlt nur 20
-rl.question(`Wie viele Bewertungen sollen generiert werden?`, function(so){
-    for(let mebeme = 0; mebeme<so; mebeme++){
-        let mesee = Math.floor((Math.random() * (maxRating + 1)));
-        console.log(mesee);
-        calcNewRating(mesee);
-        giveStats();
-    }
-});
+
+
 
