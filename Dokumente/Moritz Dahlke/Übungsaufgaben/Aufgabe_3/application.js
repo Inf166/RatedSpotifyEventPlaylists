@@ -7,12 +7,19 @@ Cities.getCities().then(() => { // Gibt eine Liste aller Städte aus
                 Cities.addCity('Leipzig', '571088', 'Sachsen').then(() => { // Fügt die Stadt wieder hinzu.
                     Cities.getCities().then(() => {
                         printUsers(); // Funktion für den in Aufgabe 4 (Aufgabenblatt 3) geforderten Aufruf.
-                    });
-                });
-            });
-        });
-    });
-});
+                    }).catch(err => console.error(err));
+                }).catch(err => console.error(err));
+            }).catch(err => console.error(err));
+        }).catch(err => console.error(err));
+    }).catch(err => console.error(err));
+}).catch(err => console.error(err));
+
+/*
+    Aufgabe 3: Errors - Eigenschaften von try/catch in Javascript und Lösungsansatz
+    In asynchronen Callbacks lassen sich keine Fehler durch try/catch abfangen.
+    Stattdessen geben Callbacks im Fall eines Fehlers ein Error-Objekt zurück.
+    ( In diesem Fall führt dies mittels 'reject()' zur Beendigung der Promises )
+*/
 
 const fs = require('fs');
 function printUsers() {
@@ -21,31 +28,27 @@ function printUsers() {
     var cities;
     var users;
 
-    try {
-        fs.readFile('./json/cities.json', 'utf8', (err, data) => {
+    fs.readFile('./json/cities.json', 'utf8', (err, data) => {
+        if (err) throw(err);
+        cities = JSON.parse(data);
+
+        fs.readFile('./json/users.json', 'utf8', (err, data) => {
             if (err) throw(err);
-            cities = JSON.parse(data);
+            users = JSON.parse(data);
 
-            fs.readFile('./json/users.json', 'utf8', (err, data) => {
-                if (err) throw(err);
-                users = JSON.parse(data);
+            users.forEach((user) => {
+                let einwohner;
+                let bundesland;
+                cities.forEach((city) => {
+                    if (city.name === user.wohnort) {
+                        einwohner = city.einwohner;
+                        bundesland = city.bundesland;
+                    }
+                });
 
-                users.forEach((user) => {
-                    let einwohner;
-                    let bundesland;
-                    cities.forEach((city) => {
-                        if (city.name === user.wohnort) {
-                            einwohner = city.einwohner;
-                            bundesland = city.bundesland;
-                        }
-                    });
+                console.log(`Vorname: ${user.vorname}\nNachname: ${user.nachname}\nE-Mail: ${user.email}\nWohnort: ${user.wohnort}\nEinwohner: ${einwohner}\nBundesland: ${bundesland}\n-----`);
+            })
 
-                    console.log(`Vorname: ${user.vorname}\nNachname: ${user.nachname}\nE-Mail: ${user.email}\nWohnort: ${user.wohnort}\nEinwohner: ${einwohner}\nBundesland: ${bundesland}\n-----`);
-                })
-
-            });
         });
-    } catch (e) {
-        console.error(e);
-    }
+    });
 }
