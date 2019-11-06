@@ -5,7 +5,7 @@ const citiesFile = './cities.json';
 // Exportierte Funktion getCities liefert die gelisteten Städte
 exports.getCities = () => {
     return new Promise ( ( resolve , reject ) => {                  // Neues Promise 
-        try { 
+
             fs.readFile( citiesFile , 'utf8' , ( err , data ) => {  // Einlesen des JSON-Files
                 if ( err ) reject( err );                           // Bei Fehler Abbruch
     
@@ -18,16 +18,16 @@ exports.getCities = () => {
     
                 resolve();                                          // Promise einlösen
             });
-        } catch ( err ) {                                           // oder bei Fehler -
+                                         // oder bei Fehler -
             reject( err );                                          // Abbrechen und Melden
-        }
+
     });
 };
 
 // Exportierte Funktion findCity liefert die gesuchte Stadt
 exports.findCity = ( stadtname ) => {
     return new Promise( ( resolve , reject ) => {                   // Neues Promise 
-        try {
+
             fs.readFile( citiesFile , 'utf8' , ( err , data ) => {  // Einlesen des JSON-Files
                 if ( err ) reject( err );                           // Bei Fehler Abbruch
         
@@ -41,16 +41,16 @@ exports.findCity = ( stadtname ) => {
     
                 resolve();                                          // Promise einlösen
             });                 
-        } catch ( err ) {                                           // oder bei Fehler -
+                                          // oder bei Fehler -
             reject( err );                                          // Abbrechen und Melden
-        }
+
     } );
 }
 
 // Exportierte Funktion deleteCity löscht die gewünschte Stadt
 exports.deleteCity = ( stadtname ) => {
     return new Promise( ( resolve , reject ) => {                   // Neues Promise 
-        try {
+
             fs.readFile( citiesFile , 'utf8' , ( err, data ) => {   // Einlesen des JSON-Files
                 if ( err ) reject( err );                           // Bei Fehler Abbruch
         
@@ -68,16 +68,16 @@ exports.deleteCity = ( stadtname ) => {
                     resolve();                                      // Promise einlösen
                 });
             });
-        } catch ( err ) {                                           // oder bei Fehler -
+                                         // oder bei Fehler -
             reject( err );                                          // Abbrechen und Melden
-        }   
+
     });
 }
 
 // Exportierte Funktion addCity fügt die gewünschte Stadt dem JSON-File hinzu
 exports.addCity = ( pstadtname , peinwohnerzahl , pbundesland ) => {
     return new Promise( ( resolve , reject ) => {                   // Neues Promise 
-        try {
+
             fs.readFile( citiesFile , 'utf8' , ( err , data ) => {  // Einlesen des JSON-Files
                 if ( err ) reject( err );                           // Bei Fehler Abbruch
     
@@ -95,8 +95,8 @@ exports.addCity = ( pstadtname , peinwohnerzahl , pbundesland ) => {
                     resolve();                                      // Promise einlösen
                 });
             }); 
-        } catch ( err ) {                                           // oder bei Fehler -
+                                        // oder bei Fehler -
             reject( err );                                          // Abbrechen und Melden
-        }   
+ 
     });
 }

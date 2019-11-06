@@ -8,12 +8,20 @@ cm.getCities().then(() => {                                         // Liefert d
                 cm.addCity('Düren', '90733', 'NRW').then(() => {    // Fügt die Stadt wieder dem JSON File hinzu
                     cm.getCities().then(() => {
                         printUsers();                               // Aufgabe 4 - 
-                    });
-                });
-            });
-        });
-    });
-});
+                    }).catch(err => console.error(err));
+                }).catch(err => console.error(err));
+            }).catch(err => console.error(err));
+        }).catch(err => console.error(err));
+    }).catch(err => console.error(err));
+}).catch(err => console.error(err));
+
+/*
+    Aufgabe 3: Errors - Eigenschaften von try/catch in Javascript und Lösungsansatz
+    In asynchronen Callbacks lassen sich keine Fehler durch try/catch abfangen.
+    Stattdessen geben Callbacks im Fall eines Fehlers ein Error-Objekt zurück.
+    ( In diesem Fall führt dies mittels 'reject()' zur Beendigung der Promises )
+*/
+
 // Einbinden des File-System Modul
 const fs = require('fs');
 
@@ -24,7 +32,7 @@ function printUsers() {
     var cities;                                                                     // Städte Variable
     var users;                                                                      // Nutzer Variable
 
-    try {
+ 
         fs.readFile('cities.json', 'utf8', ( err , data ) => {             // Einlesen der Städte 
             if ( err ) throw( err );                                                // Bei Fehler Abbruch
             cities = JSON.parse(data);                                              // Übergeben an die Variable
@@ -48,7 +56,7 @@ function printUsers() {
 
             });
         });
-    } catch ( err ) {                                                                // Bei Fehler
+                                                              // Bei Fehler
         console.error( err );                                                        // Abbruch und Melden
-    }
+
 }
