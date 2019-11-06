@@ -18,9 +18,6 @@ exports.getCities = () => {
     
                 resolve();                                          // Promise einlösen
             });
-                                         // oder bei Fehler -
-            reject( err );                                          // Abbrechen und Melden
-
     });
 };
 
@@ -40,10 +37,7 @@ exports.findCity = ( stadtname ) => {
                 else console.log (`The searched City '${stadtname}'could not be found.`);
     
                 resolve();                                          // Promise einlösen
-            });                 
-                                          // oder bei Fehler -
-            reject( err );                                          // Abbrechen und Melden
-
+            });  
     } );
 }
 
@@ -68,9 +62,6 @@ exports.deleteCity = ( stadtname ) => {
                     resolve();                                      // Promise einlösen
                 });
             });
-                                         // oder bei Fehler -
-            reject( err );                                          // Abbrechen und Melden
-
     });
 }
 
@@ -95,8 +86,5 @@ exports.addCity = ( pstadtname , peinwohnerzahl , pbundesland ) => {
                     resolve();                                      // Promise einlösen
                 });
             }); 
-                                        // oder bei Fehler -
-            reject( err );                                          // Abbrechen und Melden
- 
     });
 }
