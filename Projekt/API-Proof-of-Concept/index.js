@@ -29,7 +29,7 @@ function updateSpotifyAccessToken() {
     setInterval(function() {
         var timeLeft = Math.floor(tokenExpirationTime - new Date().getTime() / 1000);
         //console.log(timeLeft + 'Seconds');
-        if (timeLeft <= 3590) {
+        if (timeLeft <= 1000) {
             clearInterval(this);
 
             getSpotifyAccessToken().catch((err) => {
