@@ -4,6 +4,10 @@ const app = express();
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 const eventRoutes = require('./api/routes/events');
 const setRoutes = require('./api/routes/sets');
 const requestRoutes = require('./api/routes/requests');
