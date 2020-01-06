@@ -8,9 +8,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    res.status(201).json({
-        message: 'POST Response for /requests'
-    });
+    if (track = req.body.track) {
+        res.status(201).json({
+            message: 'Request Created.',
+            track: track
+        });
+    } else {
+        res.status(400).json({
+            message: 'Bad Request. (Missing Property: track)'
+        });
+    }
 });
 
 module.exports = router;
