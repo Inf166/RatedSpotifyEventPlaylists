@@ -38,7 +38,7 @@ module.exports = function() {
                     this.spotifyApi.getTrack(trackID).then(data => {
                         let trackInfo = data.body;
                         let name = trackInfo.name;
-                        let artist = trackInfo.artists[0] || 'Unknown';
+                        let artist = trackInfo.artists[0].name || 'Unknown';
                         let duration_ms = trackInfo.duration_ms;
                         let popularity = trackInfo.popularity;
         
