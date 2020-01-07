@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const spotifyWebAPI = require('../../dependencies/spotify/spotify');
+const spotifyWebAPI = require('../helpers/spotify/spotify');
 const spotify = new spotifyWebAPI();
 
 router.get('/', (req, res, next) => {

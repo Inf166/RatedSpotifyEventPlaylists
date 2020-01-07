@@ -1,5 +1,5 @@
 const path = require('path');
-const apiCredentials = require(path.join(__dirname, 'spotify.json'));
+const spotifyConfig = require(path.join(__dirname, 'spotify.json'));
 
 const SpotifyWebApi = require('spotify-web-api-node');
 
@@ -9,8 +9,8 @@ const REGEX = /^(https:\/\/open.spotify.com\/track\/|spotify:track:)([a-zA-Z0-9]
 
 module.exports = function() {
     this.spotifyApi = new SpotifyWebApi({
-        clientId: apiCredentials.clientID,
-        clientSecret: apiCredentials.clientSecret
+        clientId: spotifyConfig.clientID,
+        clientSecret: spotifyConfig.clientSecret
     });
 
     this.getAccessToken = function() {
