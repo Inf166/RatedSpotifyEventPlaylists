@@ -4,6 +4,9 @@ const router = express.Router();
 const spotifyWebAPI = require('../helpers/spotify/spotify');
 const spotify = new spotifyWebAPI();
 
+const mongoose = require('mongoose');
+const request = require('../models/request');
+
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message: 'OK',

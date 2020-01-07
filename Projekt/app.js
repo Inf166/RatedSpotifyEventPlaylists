@@ -1,5 +1,11 @@
+const path = require('path');
+const config = require(path.join(__dirname, 'api/config.json'));
+
 const express = require('express');
 const app = express();
+
+const mongoose = require("mongoose");
+mongoose.connect('mongodb+srv://' + config.mongodb.login + '@gdw-1920-dvxtw.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const morgan = require('morgan');
 app.use(morgan('dev'));

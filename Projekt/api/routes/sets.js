@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const mongoose = require('mongoose');
+const set = require('../models/set');
+
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message: 'GET Response for /sets'

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const mongoose = require('mongoose');
+const event = require('../models/event');
+
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message: 'GET Response for /events'
