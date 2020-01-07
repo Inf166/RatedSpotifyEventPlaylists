@@ -30,7 +30,7 @@ module.exports = function() {
 
     this.getTrack = function(trackURI) {
         return new Promise((resolve, reject) => {
-            let validURI = trackURI.match(REGEX);
+            let validURI = trackURI.toString().match(REGEX);
             if (validURI) {
                 let trackID = validURI[2];
 
@@ -60,14 +60,14 @@ module.exports = function() {
                                 duration_ms: duration_ms,
                                 popularity: popularity,
                                 acousticness: acousticness,
-                                danceability = danceability,
-                                energy = energy,
-                                instrumentalness = instrumentalness,
-                                liveness = liveness,
-                                loudness = loudness,
-                                speechiness = speechiness,
-                                valence = valence,
-                                tempo = tempo
+                                danceability: danceability,
+                                energy: energy,
+                                instrumentalness: instrumentalness,
+                                liveness: liveness,
+                                loudness: loudness,
+                                speechiness: speechiness,
+                                valence: valence,
+                                tempo: tempo
                             };
     
                             resolve(trackData);
@@ -81,7 +81,7 @@ module.exports = function() {
                     reject(err);
                 });
             } else {
-                reject('Invalid Track ID');
+                reject('invalidTrackID');
             }
         });
     }
