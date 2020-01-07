@@ -8,6 +8,18 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE');
+        return res.status(200).json({});
+    }
+
+    next();
+});
+
 const eventRoutes = require('./api/routes/events');
 const setRoutes = require('./api/routes/sets');
 const requestRoutes = require('./api/routes/requests');
