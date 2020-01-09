@@ -55,7 +55,7 @@ module.exports = function() {
                             let tempo = audioFeatures.tempo;
         
                             let trackData = {
-                                spotifyID: trackID,
+                                track_id: trackID,
                                 name: name,
                                 artist: artist,
                                 duration_ms: duration_ms,

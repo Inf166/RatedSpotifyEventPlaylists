@@ -7,7 +7,7 @@ const spotify = new spotifyWebAPI();
 const mongoose = require('mongoose');
 const Request = require('../models/request');
 
-const querySelect = '_id _setID spotifyID name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
+const querySelect = '_id _setID track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
 
 router.get('/', (req, res, next) => {
     Request.find().select(querySelect).exec().then(requests => {
@@ -67,7 +67,7 @@ router.post('/', (req, res, next) => {
                 const request = new Request({
                     _id: mongoose.Types.ObjectId(),
                     _setID: mongoose.Types.ObjectId(setID),
-                    spotifyID: data.spotifyID,
+                    track_id: data.track_id,
                     name: data.name,
                     artist: data.artist,
                     duration_ms: data.duration_ms,
@@ -89,7 +89,7 @@ router.post('/', (req, res, next) => {
                         result: { 
                             _id: result.id,
                             _setID: result._setID,
-                            spotifyID: result.spotifyID,
+                            track_id: result.track_id,
                             name: result.name,
                             artist: result.artist,
                             duration_ms: result.duration_ms,

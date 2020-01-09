@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const requestSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     _setID: mongoose.Schema.Types.ObjectId,
-    spotifyID: { type: String, required: true },
+    track_id: { type: String, required: true },
     name: { type: String, required: true },
     artist: { type: String, required: true },
     duration_ms: { type: Number, required: true },
