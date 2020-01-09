@@ -6,7 +6,6 @@ const spotify = new spotifyWebAPI();
 
 const mongoose = require('mongoose');
 const Request = require('../models/request');
-const Set = require('../models/set');
 
 router.get('/', (req, res, next) => {
 	Request.find().exec().then(requests => {
@@ -21,6 +20,35 @@ router.get('/', (req, res, next) => {
 			error: err
 		});
 	});
+});
+
+router.get('/:requestID', (req, res, next) => {
+	if (requestID = req.params.requestID) {
+		Request.findById(requestID).exec().then(request => {
+			if (request) {
+				res.status(200).json({
+					message: 'OK',
+					result: request
+				});
+			} else {
+				res.status(400).json({
+					message: 'Bad Request',
+					error: 'Invalid Property: requestID'
+				});
+			}
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({
+				message: 'Internal Server Error',
+				error: err
+			});
+		});
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: requestID'
+        });
+	}
 });
 
 router.post('/', (req, res, next) => {

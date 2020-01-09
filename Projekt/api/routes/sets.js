@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:setID', (req, res, next) => {
-	if (setID = req.body.setID) {
+	if (setID = req.params.setID) {
 		Set.findById(setID).exec().then(set => {
 			if (set) {
 				res.status(200).json({

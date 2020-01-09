@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:eventID', (req, res, next) => {
-	if (eventID = req.body.eventID) {
+	if (eventID = req.params.eventID) {
 		Event.findById(eventID).exec().then(event => {
 			if (event) {
 				res.status(200).json({
