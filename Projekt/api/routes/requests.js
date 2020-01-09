@@ -6,6 +6,7 @@ const spotify = new spotifyWebAPI();
 
 const mongoose = require('mongoose');
 const Request = require('../models/request');
+const Set = require('../models/set');
 
 router.get('/', (req, res, next) => {
 	Request.find().exec().then(requests => {
@@ -23,12 +24,39 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    if (track = req.body.track) {
+    if ((trackID = req.body.trackID) && (setID = req.body.setID)) {
         spotify.getAccessToken().then(() => {
-            spotify.getTrack(track).then(data => {
-                res.status(201).json({
-                    message: 'Created',
-                    result: data
+            spotify.getTrack(trackID).then(data => {
+                const request = new Request({
+                    _id: mongoose.Types.ObjectId(),
+                    _setID: mongoose.Types.ObjectId(setID),
+                    spotifyID: data.spotifyID,
+                    name: data.name,
+                    artist: data.artist,
+                    duration_ms: data.duration_ms,
+                    popularity: data.popularity,
+                    acousticness: data.acousticness,
+                    danceability: data.danceability,
+                    energy: data.energy,
+                    instrumentalness: data.instrumentalness,
+                    liveness: data.liveness,
+                    loudness: data.loudness,
+                    speechiness: data.speechiness,
+                    valence: data.valence,
+                    tempo: data.tempo
+                });
+
+                request.save().then(result => {
+                    res.status(201).json({
+                        message: 'OK',
+                        result: result
+                    });
+                }).catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                        message: 'Internal Server Error',
+                        error: err
+                    });
                 });
             }).catch(err => {
                 if (err == 'invalidTrackID' || err.message == 'Bad Request') {
@@ -52,7 +80,7 @@ router.post('/', (req, res, next) => {
     } else {
         res.status(400).json({
             message: 'Bad Request',
-            error: 'Missing Property: track'
+            error: 'Missing Property: trackID'
         });
     }
 });

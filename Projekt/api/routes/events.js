@@ -49,9 +49,46 @@ router.get('/:eventID', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    res.status(201).json({
-        message: 'POST Response for /events'
-    });
+	if ((name = req.body.name) && (location = req.body.location) && (date = req.body.date) && (topic = req.body.topic)) {
+		const event = new Event({
+			_id: mongoose.Types.ObjectId(),
+			name: name,
+			location: location,
+			date: date,
+			topic: topic
+		});
+
+		event.save().then(result => {
+			res.status(201).json({
+				message: 'OK',
+				result: result
+			});
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({
+				message: 'Internal Server Error',
+				error: err
+			});
+		});
+	} else {
+		var missing = [];
+		if (!req.body.name) {
+			missing.push('name');
+		}
+		if (!req.body.location) {
+			missing.push('location');
+		}
+		if (!req.body.date) {
+			missing.push('date');
+		}
+		if (!req.body.topic) {
+			missing.push('topic');
+		}
+        res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: ' + missing.join(', ')
+        });
+	}
 });
 
 router.patch('/:eventID', (req, res, next) => {
