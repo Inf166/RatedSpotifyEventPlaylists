@@ -21,25 +21,32 @@ router.get('/', (req, res, next) => {
 
 router.get('/:setID', (req, res, next) => {
 	if (setID = req.params.setID) {
-		Set.findById(setID).exec().then(set => {
-			if (set) {
-				res.status(200).json({
-					message: 'OK',
-					result: set
+		if (mongoose.Types.ObjectId.isValid(setID)) {
+			Set.findById(setID).exec().then(set => {
+				if (set) {
+					res.status(200).json({
+						message: 'OK',
+						result: set
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						error: 'Invalid Property: setID'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
 				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					error: 'Invalid Property: setID'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
 			});
-		});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				error: 'Invalid Property: setID'
+			});
+		}
 	} else {
 		res.status(400).json({
             message: 'Bad Request',
@@ -84,27 +91,75 @@ router.post('/', (req, res, next) => {
 	}
 });
 
+router.patch('/:setID', (req, res, next) => {
+	if (setID = req.params.setID) {
+		if (mongoose.Types.ObjectId.isValid(setID)) {
+			const updateVariables = {};
+			for (const variables of req.body) {
+				updateVariables[variables.propName] = variables.value;
+			}
+	
+			Set.updateOne({ _id: mongoose.Types.ObjectId(setID) }, { $set: updateVariables }).exec().then(result => {
+				if (result.nModified > 0) {
+					res.status(200).json({
+						message: 'OK',
+						result: 'Set Updated.'
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						result: 'Invalid Property: setID'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
+				});
+			});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				error: 'Invalid Property: setID'
+			});
+		}
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: setID'
+        });
+	}
+});
+
 router.delete('/', (req, res, next) => {
 	if (setID = req.body.setID) {
-		Set.deleteOne({ _id: mongoose.Types.ObjectId(setID) }).exec().then(result => {
-			if (result.deletedCount > 0) {
-				res.status(200).json({
-					message: 'OK',
-					result: 'Set Deleted.'
+		if (mongoose.Types.ObjectId.isValid(eventID)) {
+			Set.deleteOne({ _id: mongoose.Types.ObjectId(setID) }).exec().then(result => {
+				if (result.deletedCount > 0) {
+					res.status(200).json({
+						message: 'OK',
+						result: 'Set Deleted.'
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						result: 'Invalid Set ID.'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
 				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					result: 'Invalid Set ID.'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
 			});
-		});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				result: 'Invalid Set ID.'
+			});
+		}
 	} else {
 		res.status(400).json({
             message: 'Bad Request',

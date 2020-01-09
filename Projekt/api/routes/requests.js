@@ -24,25 +24,32 @@ router.get('/', (req, res, next) => {
 
 router.get('/:requestID', (req, res, next) => {
 	if (requestID = req.params.requestID) {
-		Request.findById(requestID).exec().then(request => {
-			if (request) {
-				res.status(200).json({
-					message: 'OK',
-					result: request
-				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					error: 'Invalid Property: requestID'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
-			});
-		});
+        if (mongoose.Types.ObjectId.isValid(requestID)) {
+            Request.findById(requestID).exec().then(request => {
+                if (request) {
+                    res.status(200).json({
+                        message: 'OK',
+                        result: request
+                    });
+                } else {
+                    res.status(400).json({
+                        message: 'Bad Request',
+                        error: 'Invalid Property: requestID'
+                    });
+                }
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    message: 'Internal Server Error',
+                    error: err
+                });
+            });
+        } else {
+            res.status(400).json({
+                message: 'Bad Request',
+                error: 'Invalid Property: requestID'
+            });
+        }
 	} else {
 		res.status(400).json({
             message: 'Bad Request',
@@ -115,25 +122,32 @@ router.post('/', (req, res, next) => {
 
 router.delete('/', (req, res, next) => {
 	if (requestID = req.body.requestID) {
-		Request.deleteOne({ _id: mongoose.Types.ObjectId(requestID) }).exec().then(result => {
-			if (result.deletedCount > 0) {
-				res.status(200).json({
-					message: 'OK',
-					result: 'Request Deleted.'
-				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					result: 'Invalid Request ID.'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
-			});
-		});
+        if (mongoose.Types.ObjectId.isValid(eventID)) {
+            Request.deleteOne({ _id: mongoose.Types.ObjectId(requestID) }).exec().then(result => {
+                if (result.deletedCount > 0) {
+                    res.status(200).json({
+                        message: 'OK',
+                        result: 'Request Deleted.'
+                    });
+                } else {
+                    res.status(400).json({
+                        message: 'Bad Request',
+                        result: 'Invalid Request ID.'
+                    });
+                }
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    message: 'Internal Server Error',
+                    error: err
+                });
+            });
+        } else {
+            res.status(400).json({
+                message: 'Bad Request',
+                result: 'Invalid Request ID.'
+            });
+        }
 	} else {
 		res.status(400).json({
             message: 'Bad Request',

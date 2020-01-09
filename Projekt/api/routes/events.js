@@ -21,25 +21,32 @@ router.get('/', (req, res, next) => {
 
 router.get('/:eventID', (req, res, next) => {
 	if (eventID = req.params.eventID) {
-		Event.findById(eventID).exec().then(event => {
-			if (event) {
-				res.status(200).json({
-					message: 'OK',
-					result: event
+		if (mongoose.Types.ObjectId.isValid(eventID)) {
+			Event.findById(eventID).exec().then(event => {
+				if (event) {
+					res.status(200).json({
+						message: 'OK',
+						result: event
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						error: 'Invalid Property: eventID'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
 				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					error: 'Invalid Property: eventID'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
 			});
-		});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				error: 'Invalid Property: eventID'
+			});
+		}
 	} else {
 		res.status(400).json({
             message: 'Bad Request',
@@ -92,35 +99,74 @@ router.post('/', (req, res, next) => {
 });
 
 router.patch('/:eventID', (req, res, next) => {
-    const id = req.params.eventID;
-
-    res.status(200).json({
-        message: 'Event Updated',
-        id: id
-    });
+	if (eventID = req.params.eventID) {
+		if (mongoose.Types.ObjectId.isValid(eventID)) {
+			const updateVariables = {};
+			for (const variables of req.body) {
+				updateVariables[variables.propName] = variables.value;
+			}
+	
+			Event.updateOne({ _id: mongoose.Types.ObjectId(eventID) }, { $set: updateVariables }).exec().then(result => {
+				if (result.nModified > 0) {
+					res.status(200).json({
+						message: 'OK',
+						result: 'Event Updated.'
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						result: 'Invalid Property: eventID'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
+				});
+			});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				error: 'Invalid Property: eventID'
+			});
+		}
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: eventID'
+        });
+	}
 });
 
 router.delete('/', (req, res, next) => {
 	if (eventID = req.body.eventID) {
-		Event.deleteOne({ _id: mongoose.Types.ObjectId(eventID) }).exec().then(result => {
-			if (result.deletedCount > 0) {
-				res.status(200).json({
-					message: 'OK',
-					result: 'Event Deleted.'
+		if (mongoose.Types.ObjectId.isValid(eventID)) {
+			Event.deleteOne({ _id: mongoose.Types.ObjectId(eventID) }).exec().then(result => {
+				if (result.deletedCount > 0) {
+					res.status(200).json({
+						message: 'OK',
+						result: 'Event Deleted.'
+					});
+				} else {
+					res.status(400).json({
+						message: 'Bad Request',
+						result: 'Invalid Property: eventID'
+					});
+				}
+			}).catch(err => {
+				console.log(err);
+				res.status(500).json({
+					message: 'Internal Server Error',
+					error: err
 				});
-			} else {
-				res.status(400).json({
-					message: 'Bad Request',
-					result: 'Invalid Event ID.'
-				});
-			}
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
 			});
-		});
+		} else {
+			res.status(400).json({
+				message: 'Bad Request',
+				result: 'Invalid Property: eventID'
+			});
+		}
 	} else {
 		res.status(400).json({
             message: 'Bad Request',
