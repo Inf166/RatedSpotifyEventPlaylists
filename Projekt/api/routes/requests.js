@@ -34,7 +34,7 @@ router.post('/', (req, res, next) => {
                 if (err == 'invalidTrackID' || err.message == 'Bad Request') {
                     res.status(400).json({
                         message: 'Bad Request',
-                        error: 'Invalid Track ID'
+                        error: 'Invalid Property: trackID'
                     });
                 } else {
                     res.status(500).json({

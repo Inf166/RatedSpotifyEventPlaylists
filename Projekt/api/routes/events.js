@@ -19,18 +19,38 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+router.get('/:eventID', (req, res, next) => {
+	if (eventID = req.body.eventID) {
+		Event.findById(eventID).exec().then(event => {
+			if (event) {
+				res.status(200).json({
+					message: 'OK',
+					result: event
+				});
+			} else {
+				res.status(400).json({
+					message: 'Bad Request',
+					error: 'Invalid Property: eventID'
+				});
+			}
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({
+				message: 'Internal Server Error',
+				error: err
+			});
+		});
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: eventID'
+        });
+	}
+});
+
 router.post('/', (req, res, next) => {
     res.status(201).json({
         message: 'POST Response for /events'
-    });
-});
-
-router.get('/:eventID', (req, res, next) => {
-    const id = req.params.eventID;
-
-    res.status(200).json({
-        message: 'Event Information',
-        id: id
     });
 });
 
