@@ -113,4 +113,33 @@ router.post('/', (req, res, next) => {
     }
 });
 
+router.delete('/', (req, res, next) => {
+	if (requestID = req.body.requestID) {
+		Request.deleteOne({ _id: mongoose.Types.ObjectId(requestID) }).exec().then(result => {
+			if (result.deletedCount > 0) {
+				res.status(200).json({
+					message: 'OK',
+					result: 'Request Deleted.'
+				});
+			} else {
+				res.status(400).json({
+					message: 'Bad Request',
+					result: 'Invalid Request ID.'
+				});
+			}
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({
+				message: 'Internal Server Error',
+				error: err
+			});
+		});
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: requestID'
+        });
+	}
+});
+
 module.exports = router;

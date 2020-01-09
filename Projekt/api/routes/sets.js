@@ -84,13 +84,33 @@ router.post('/', (req, res, next) => {
 	}
 });
 
-router.delete('/:setID', (req, res, next) => {
-    const id = req.params.setID;
-
-    res.status(200).json({
-        message: 'Set Deleted',
-        id: id
-    });
+router.delete('/', (req, res, next) => {
+	if (setID = req.body.setID) {
+		Set.deleteOne({ _id: mongoose.Types.ObjectId(setID) }).exec().then(result => {
+			if (result.deletedCount > 0) {
+				res.status(200).json({
+					message: 'OK',
+					result: 'Set Deleted.'
+				});
+			} else {
+				res.status(400).json({
+					message: 'Bad Request',
+					result: 'Invalid Set ID.'
+				});
+			}
+		}).catch(err => {
+			console.log(err);
+			res.status(500).json({
+				message: 'Internal Server Error',
+				error: err
+			});
+		});
+	} else {
+		res.status(400).json({
+            message: 'Bad Request',
+            error: 'Missing Property: setID'
+        });
+	}
 });
 
 module.exports = router;
