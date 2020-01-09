@@ -5,13 +5,21 @@ const spotifyWebAPI = require('../helpers/spotify/spotify');
 const spotify = new spotifyWebAPI();
 
 const mongoose = require('mongoose');
-const request = require('../models/request');
+const Request = require('../models/request');
 
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'OK',
-        requests: []
-    });
+	Request.find().exec().then(requests => {
+		res.status(200).json(({
+			message: 'OK',
+			result: requests
+		}));
+	}).catch(err => {
+		console.log(err);
+		res.status(500).json({
+			message: 'Internal Server Error',
+			error: err
+		});
+	});
 });
 
 router.post('/', (req, res, next) => {
@@ -20,7 +28,7 @@ router.post('/', (req, res, next) => {
             spotify.getTrack(track).then(data => {
                 res.status(201).json({
                     message: 'Created',
-                    track: data
+                    result: data
                 });
             }).catch(err => {
                 if (err == 'invalidTrackID' || err.message == 'Bad Request') {
