@@ -7,25 +7,27 @@ const spotify = new spotifyWebAPI();
 const mongoose = require('mongoose');
 const Request = require('../models/request');
 
+const querySelect = '_id _setID spotifyID name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
+
 router.get('/', (req, res, next) => {
-	Request.find().exec().then(requests => {
-		res.status(200).json(({
-			message: 'OK',
-			result: requests
-		}));
-	}).catch(err => {
-		console.log(err);
-		res.status(500).json({
-			message: 'Internal Server Error',
-			error: err
-		});
-	});
+    Request.find().select(querySelect).exec().then(requests => {
+        res.status(200).json(({
+            message: 'OK',
+            result: requests
+        }));
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({
+            message: 'Internal Server Error',
+            error: err
+        });
+    });
 });
 
 router.get('/:requestID', (req, res, next) => {
 	if (requestID = req.params.requestID) {
         if (mongoose.Types.ObjectId.isValid(requestID)) {
-            Request.findById(requestID).exec().then(request => {
+            Request.findById(requestID).select(querySelect).exec().then(request => {
                 if (request) {
                     res.status(200).json({
                         message: 'OK',
@@ -84,7 +86,24 @@ router.post('/', (req, res, next) => {
                 request.save().then(result => {
                     res.status(201).json({
                         message: 'OK',
-                        result: result
+                        result: { 
+                            _id: result.id,
+                            _setID: result._setID,
+                            spotifyID: result.spotifyID,
+                            name: result.name,
+                            artist: result.artist,
+                            duration_ms: result.duration_ms,
+                            popularity: result.popularity,
+                            acousticness: result.acousticness,
+                            danceability: result.danceability,
+                            energy: result.energy,
+                            instrumentalness: result.instrumentalness,
+                            liveness: result.liveness,
+                            loudness: result.loudness,
+                            speechiness: result.speechiness,
+                            valence: result.valence,
+                            tempo: result.tempo
+                        }
                     });
                 }).catch(err => {
                     console.log(err);

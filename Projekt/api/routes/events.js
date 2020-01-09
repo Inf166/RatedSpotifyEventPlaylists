@@ -4,8 +4,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Event = require('../models/event');
 
+const querySelect = '_id name location date topic';
+
 router.get('/', (req, res, next) => {
-	Event.find().exec().then(events => {
+	Event.find().select(querySelect).exec().then(events => {
 		res.status(200).json(({
 			message: 'OK',
 			result: events
@@ -22,7 +24,7 @@ router.get('/', (req, res, next) => {
 router.get('/:eventID', (req, res, next) => {
 	if (eventID = req.params.eventID) {
 		if (mongoose.Types.ObjectId.isValid(eventID)) {
-			Event.findById(eventID).exec().then(event => {
+			Event.findById(eventID).select(querySelect).exec().then(event => {
 				if (event) {
 					res.status(200).json({
 						message: 'OK',
@@ -68,7 +70,13 @@ router.post('/', (req, res, next) => {
 		event.save().then(result => {
 			res.status(201).json({
 				message: 'OK',
-				result: result
+				result: { 
+					_id: result.id,
+					name: result.name,
+					location: result.location,
+					date: result.date,
+					topic: result.topic
+				}
 			});
 		}).catch(err => {
 			console.log(err);

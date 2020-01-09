@@ -4,8 +4,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Set = require('../models/set');
 
+const querySelect = '_id _eventID name description';
+
 router.get('/', (req, res, next) => {
-	Set.find().exec().then(sets => {
+	Set.find().select(querySelect).exec().then(sets => {
 		res.status(200).json(({
 			message: 'OK',
 			result: sets
@@ -22,7 +24,7 @@ router.get('/', (req, res, next) => {
 router.get('/:setID', (req, res, next) => {
 	if (setID = req.params.setID) {
 		if (mongoose.Types.ObjectId.isValid(setID)) {
-			Set.findById(setID).exec().then(set => {
+			Set.findById(setID).select(querySelect).exec().then(set => {
 				if (set) {
 					res.status(200).json({
 						message: 'OK',
@@ -67,7 +69,12 @@ router.post('/', (req, res, next) => {
 		set.save().then(result => {
 			res.status(201).json({
 				message: 'OK',
-				result: result
+				result: { 
+					_id: result.id,
+					_eventID: result._eventID,
+					name: result.name,
+					description: result.description
+				}
 			});
 		}).catch(err => {
 			console.log(err);
