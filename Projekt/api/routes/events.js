@@ -31,8 +31,8 @@ router.get('/:eventID', (req, res, next) => {
 						result: event
 					});
 				} else {
-					res.status(400).json({
-						message: 'Bad Request',
+					res.status(404).json({
+						message: 'Not Found',
 						error: 'Invalid Property: eventID'
 					});
 				}
