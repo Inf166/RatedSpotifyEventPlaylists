@@ -3,10 +3,6 @@ const config = require(path.join(__dirname, '../../config.json'));
 
 const SpotifyWebApi = require('spotify-web-api-node');
 
-// https://open.spotify.com/track/TRACKID?XYZ
-// spotify:track:TRACKID
-const REGEX = /^(https:\/\/open.spotify.com\/track\/|spotify:track:)([a-zA-Z0-9]+)(.*)$/;
-
 module.exports = function() {
     this.spotifyApi = new SpotifyWebApi({
         clientId: config.spotify.clientID,
@@ -28,62 +24,55 @@ module.exports = function() {
         });
     }
 
-    this.getTrack = function(trackURI) {
+    this.getTrack = function(trackID) {
         return new Promise((resolve, reject) => {
-            let validURI = trackURI.toString().match(REGEX);
-            if (validURI) {
-                let trackID = validURI[2];
-
-                this.getAccessToken().then(() => {
-                    this.spotifyApi.getTrack(trackID).then(data => {
-                        let trackInfo = data.body;
-                        let name = trackInfo.name;
-                        let artist = trackInfo.artists[0].name || 'Unknown';
-                        let duration_ms = trackInfo.duration_ms;
-                        let popularity = trackInfo.popularity;
-        
-                        this.spotifyApi.getAudioFeaturesForTrack(trackID).then(data => {
-                            let audioFeatures = data.body;
-                            let acousticness = audioFeatures.acousticness;
-                            let danceability = audioFeatures.danceability;
-                            let energy = audioFeatures.energy;
-                            let instrumentalness = audioFeatures.instrumentalness;
-                            let liveness = audioFeatures.liveness;
-                            let loudness = audioFeatures.loudness;
-                            let speechiness = audioFeatures.speechiness;
-                            let valence = audioFeatures.valence;
-                            let tempo = audioFeatures.tempo;
-        
-                            let trackData = {
-                                track_id: trackID,
-                                name: name,
-                                artist: artist,
-                                duration_ms: duration_ms,
-                                popularity: popularity,
-                                acousticness: acousticness,
-                                danceability: danceability,
-                                energy: energy,
-                                instrumentalness: instrumentalness,
-                                liveness: liveness,
-                                loudness: loudness,
-                                speechiness: speechiness,
-                                valence: valence,
-                                tempo: tempo
-                            };
+            this.getAccessToken().then(() => {
+                this.spotifyApi.getTrack(trackID).then(data => {
+                    let trackInfo = data.body;
+                    let name = trackInfo.name;
+                    let artist = trackInfo.artists[0].name || 'Unknown';
+                    let duration_ms = trackInfo.duration_ms;
+                    let popularity = trackInfo.popularity;
     
-                            resolve(trackData);
-                        }).catch(err => {
-                            reject(err);
-                        });
+                    this.spotifyApi.getAudioFeaturesForTrack(trackID).then(data => {
+                        let audioFeatures = data.body;
+                        let acousticness = audioFeatures.acousticness;
+                        let danceability = audioFeatures.danceability;
+                        let energy = audioFeatures.energy;
+                        let instrumentalness = audioFeatures.instrumentalness;
+                        let liveness = audioFeatures.liveness;
+                        let loudness = audioFeatures.loudness;
+                        let speechiness = audioFeatures.speechiness;
+                        let valence = audioFeatures.valence;
+                        let tempo = audioFeatures.tempo;
+    
+                        let trackData = {
+                            track_id: trackID,
+                            name: name,
+                            artist: artist,
+                            duration_ms: duration_ms,
+                            popularity: popularity,
+                            acousticness: acousticness,
+                            danceability: danceability,
+                            energy: energy,
+                            instrumentalness: instrumentalness,
+                            liveness: liveness,
+                            loudness: loudness,
+                            speechiness: speechiness,
+                            valence: valence,
+                            tempo: tempo
+                        };
+
+                        resolve(trackData);
                     }).catch(err => {
                         reject(err);
                     });
                 }).catch(err => {
                     reject(err);
                 });
-            } else {
-                reject('invalidTrackID');
-            }
+            }).catch(err => {
+                reject(err);
+            });
         });
     }
 }
