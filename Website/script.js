@@ -1,3 +1,6 @@
+var serviceURL = "http://localhost:3000/";
+
+
 // Action Listner für die Navigation
 
 document.getElementById("openSongRequest").onclick = function () { 
@@ -37,62 +40,97 @@ document.getElementById("createEvent").onclick = function () {
     var eventDate = document.getElementById("eventDate").value;
     var eventTopic = document.getElementById("eventTopic").value;
     var newEvent = {"name" : eventName, "location" : eventLocation, "date" : eventDate, "topic" : eventTopic};
+    var newpath = serviceURL + "events/";
+    post(newpath, newEvent);
 };
 document.getElementById("createSet").onclick = function () { 
     var setEventId = document.getElementById("setEventId").value;
     var setName = document.getElementById("setName").value;
     var setDescription = document.getElementById("setDescription").value;
     var newSet = {"eventID" : setEventId, "name" : setName, "description" : setDescription};
+    var newpath = serviceURL + "sets/";
+    post(newpath, newSet);
 };
 document.getElementById("createRequest").onclick = function () { 
     var requestSetId = document.getElementById("requestSetId").value;
     var requestTrackUri = document.getElementById("requestTrackUri").value;
-    //TODO Check Uri and isolate the TrackID
-    var newRequest = {"setID" : requestSetId, "trackID " : checkedUri};
+    // if (requestTrackUri.startsWith('https://open.spotify.com/track/')) requestTrackUri = requestTrackUri.slice(31,requestTrackUri.length);
+    var newRequest = {"setID" : requestSetId, "trackID" : requestTrackUri};
+    var newpath = serviceURL + "requests/";
+    post(newpath, newRequest);
 };
 document.getElementById("newGET").onclick = function () { 
     var getSearchedUri = document.getElementById("getSearchedUri").value;
+    var uri = serviceURL + getSearchedUri;
+    get(uri);
 };
 document.getElementById("newDelete").onclick = function () { 
     var deleteUri = document.getElementById("deleteUri").value;
-    var newDelete = {};
+    var temp;
+    var radios = document.getElementsByName('tobedeleted');
+    for (var i = 0, length = radios.length; i < length; i++) {
+      if (radios[i].checked) {
+          temp = radios[i].value;
+        break;
+      }
+    }
+    var newDelete;
+    if(temp === "events/"){
+        newDelete = {"eventID" : deleteUri};
+    } else {
+        newDelete = {"setID" : deleteUri};
+    }
+    var newpath = serviceURL + temp;
+    deletestuff(newpath, newDelete);
 };
 
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
+// SERVER KOMMUNIKATION
+function post (path, content) {
+    var request = new XMLHttpRequest();
+    var url = path;
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            document.getElementById("output").innerHTML = JSON.stringify(json, null, 4);
+        }else{
+            document.getElementById("output").innerHTML = request.status;
+            document.getElementById("output").innerHTML = request.responseText;
+        }
+    };
+    var data = JSON.stringify(content);
+    request.send(data);
 }
 
-var HttpClient = function() {
-    this.get = function(aUrl, aCallback) {
-    var anHttpRequest = new XMLHttpRequest();
-    anHttpRequest.onreadystatechange = function() { 
-    if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-    aCallback(anHttpRequest.responseText);
+function get(uri) {
+    var request = new XMLHttpRequest();
+    request.open('GET', uri, true);
+    request.onload = function() {
+    var data = JSON.parse(request.response);
+    if (request.status >= 200 && request.status < 400) {
+        document.getElementById("output").innerHTML = JSON.stringify(data.result, null, 4);
+    } else {
+        document.getElementById("output").innerHTML = request.status;
     }
-    anHttpRequest.open( "GET", aUrl, true ); 
-    anHttpRequest.send( null ); 
-    }
-    }
-    var theurl='http://api.ipinfodb.com/v3/ip-city/?key=9d64fcfdfacc213c7ddf4ef911dfe97b55e4696be3532bf8302876c09sadaad06b&format=json&ip=40.77.167.44';
-    var client = new HttpClient();
-    client.get(theurl, function(response) { 
-    var response1 = JSON.parse(response);
-    // alert(response);
-    document.getElementById("statusCode").innerHTML = response1.name + ", " + response1.statusCode;
-    document.getElementById("statusCode").innerHTML = response1.statusCode;
-    document.getElementById("statusMessage").innerHTML = response1.statusMessage;
-    document.getElementById("ipAddress").innerHTML = response1.ipAddress;
-    document.getElementById("countryCode").innerHTML = response1.countryCode;
-    document.getElementById("countryName").innerHTML = response1.countryName;
-    document.getElementById("regionName").innerHTML = response1.regionName;
-    document.getElementById("cityName").innerHTML = response1.cityName;
-    document.getElementById("zipCode").innerHTML = response1.zipCode;
-    document.getElementById("latitude").innerHTML = response1.latitude;
-    }); 
+}
+
+request.send();
+}
+
+function deletestuff(uri, content){
+    var request = new XMLHttpRequest();
+    var url = uri;
+    request.open("DELETE", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var json = JSON.parse(request.responseText);
+            document.getElementById("output").innerHTML = "Erfolgreich gelöscht";
+        }else{
+            document.getElementById("output").innerHTML = request.status;
+        }
+    };
+    var data = JSON.stringify(content);
+    request.send(data);
+}

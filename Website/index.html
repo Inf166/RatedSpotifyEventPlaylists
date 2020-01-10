@@ -25,48 +25,55 @@
 <div class="operation">
     <form id="formCreateEvent">
         <h2>Event erstellen</h2>
-        Event Name:<br>
-        <input id="eventName" type="text" name="name" value=""><br>
-        Event Standort:<br>
-        <input id="eventLocation" type="text" name="location" value=""><br>
-        Event Datum:<br>
-        <input id="eventDate" type="text" name="date" value=""><br>
-        Event Thema:<br>
-        <input id="eventTopic" type="text" name="topic" value=""><br><br>
+        <p>Event Name:</p>
+        <input id="eventName" type="text" name="name" value="">
+        <p>Event Standort:</p>
+        <input id="eventLocation" type="text" name="location" value="">
+        <p>Event Datum:</p>
+        <input id="eventDate" type="text" name="date" value="">
+        <p>Event Thema:</p>
+        <input id="eventTopic" type="text" name="topic" value=""><br>
         <input id="createEvent" type="button" value="Jetzt erstellen">
     </form>
     
     <form id="formCreateSet">
         <h2>Set erstellen</h2>
-        Zugeh&ouml;rige Event ID:<br>
-        <input id="setEventId" type="text" name="eventID" value=""><br>
-        Set Name:<br>
-        <input id="setName" type="text" name="name" value=""><br>
-        Set Beschreibung:<br>
-        <input id="setDescription" type="text" name="description" value=""><br><br>
+        <p>Zugeh&ouml;rige Event ID:</p>
+        <input id="setEventId" type="text" name="eventID" value="">
+        <p>Set Name:</p>
+        <input id="setName" type="text" name="name" value="">
+        <p>Set Beschreibung:</p>
+        <input id="setDescription" type="text" name="description" value=""><br>
         <input id="createSet" type="button" value="Jetzt erstellen">
     </form>
     
     <form id="formCreateRequest">
         <h2>Songvorschlag machen</h2>
-        Zugehörige SetID:<br>
-        <input id="requestSetId" type="text" name="setID" value=""><br>
-        Spotify Song ID oder Link:<br>
-        <input id="requestTrackUri" type="text" name="trackID" value=""><br><br>
+        <p>Zugehörige SetID:</p>
+        <input id="requestSetId" type="text" name="setID" value="">
+        <p>Spotify Song ID oder Link:</p>
+        <input id="requestTrackUri" type="text" name="trackID" value=""><br>
         <input id="createRequest" type="button" value="Jetzt vorschlagen">
     </form>
     
     <form id="formNewGET">
-        <h2>Suchst du was bestimmtes?</h2>
-        Dann trage hier den Pfad mit ID ein:<br>
-        <input id="getSearchedUri" type="text" name="searchedPath" value=""><br><br>
+        <h2>Du suchst was bestimmtes?</h2>
+        <p>Dann trage hier den Pfad optional mit ID ein:</p>
+        <input id="getSearchedUri" type="text" name="searchedPath" value=""><br>
         <input id="newGET" type="button" value="Jetzt Anfrage stellen">
     </form>
     
     <form id="formNewDelete">
         <h2>! Löschen</h2>
-        Zulöschende Event oder Set ID:<br>
-        <input id="deleteUri" type="text" name="deleteThisID" value=""><br><br>
+        <p>Bitte w&auml;hle das zu löschende Objekt:</p>
+        <fieldset>
+            <input type="radio" id="checkboxEvent" name="tobedeleted" value="events/">
+            <label for="checkboxEvent"> Event</label> 
+            <input type="radio" id="checkboxSet" name="tobedeleted" value="sets/">
+            <label for="checkboxSet"> Set</label>
+          </fieldset>
+        <p>Zulöschende Event oder Set ID:</p>
+        <input id="deleteUri" type="text" name="deleteThisID" value=""><br>
         <input id="newDelete" type="button" value="Jetzt Löschen">
     </form>
 </div>
@@ -74,5 +81,6 @@
 
 </div>
 <script src="script.js"></script>
+<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 </body>
 </html>

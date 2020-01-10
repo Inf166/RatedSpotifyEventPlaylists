@@ -1,13 +1,27 @@
 body {
     display: grid;
-    grid-template-columns: 30vw 70vw;
-    grid-template-rows: 50vh 50vh;
+    grid-template-columns: 30vw 65vw;
+    grid-template-rows: 70vh 25vh;
     /* font-family: 'Oswald', sans-serif; */
     font-family: 'Open Sans', sans-serif;
+}
+fieldset {
+    border: none;
 }
 input[type=button] {
     /* font-family: 'Oswald', sans-serif; */
     font-family: 'Open Sans', sans-serif;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+}
+input[type=text] {
+    border: rgba(185, 185, 185, 0.275) solid 1px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    width: 500px;
 }
 .navigation {
     background-color: rgba(238, 238, 238, 0.275);
@@ -27,6 +41,10 @@ input[type=button] {
     background-color: rgb(238, 238, 238);
     grid-column: 2 / 3;
     grid-row: 1 / 2;
+}
+p {
+   padding: 5px;
+   margin-bottom: 0 !important; 
 }
 .output {
     background-color: rgba(185, 185, 185, 0.275);
