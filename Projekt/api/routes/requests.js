@@ -11,7 +11,7 @@ const Set = require('../models/set');
 const querySelect = '_id set track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
 
 router.get('/', (req, res, next) => {
-    Request.find().select(querySelect).exec().then(requests => {
+    Request.find().select(querySelect).populate('set', 'name').exec().then(requests => {
         res.status(200).json(({
             message: 'OK',
             result: requests
@@ -28,7 +28,7 @@ router.get('/', (req, res, next) => {
 router.get('/:requestID', (req, res, next) => {
 	if (requestID = req.params.requestID) {
         if (mongoose.Types.ObjectId.isValid(requestID)) {
-            Request.findById(requestID).select(querySelect).exec().then(request => {
+            Request.findById(requestID).select(querySelect).populate('set', 'name').exec().then(request => {
                 if (request) {
                     res.status(200).json({
                         message: 'OK',
@@ -171,7 +171,7 @@ router.post('/', (req, res, next) => {
 
 router.delete('/', (req, res, next) => {
 	if (requestID = req.body.requestID) {
-        if (mongoose.Types.ObjectId.isValid(eventID)) {
+        if (mongoose.Types.ObjectId.isValid(requestID)) {
             Request.deleteOne({ _id: mongoose.Types.ObjectId(requestID) }).exec().then(result => {
                 if (result.deletedCount > 0) {
                     res.status(200).json({

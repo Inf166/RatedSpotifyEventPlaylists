@@ -8,7 +8,7 @@ const Event = require('../models/event');
 const querySelect = '_id event name description';
 
 router.get('/', (req, res, next) => {
-	Set.find().select(querySelect).exec().then(sets => {
+	Set.find().select(querySelect).populate('event', 'name').exec().then(sets => {
 		res.status(200).json(({
 			message: 'OK',
 			result: sets
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
 router.get('/:setID', (req, res, next) => {
 	if (setID = req.params.setID) {
 		if (mongoose.Types.ObjectId.isValid(setID)) {
-			Set.findById(setID).select(querySelect).exec().then(set => {
+			Set.findById(setID).select(querySelect).populate('event', 'name').exec().then(set => {
 				if (set) {
 					res.status(200).json({
 						message: 'OK',
@@ -171,7 +171,7 @@ router.patch('/:setID', (req, res, next) => {
 
 router.delete('/', (req, res, next) => {
 	if (setID = req.body.setID) {
-		if (mongoose.Types.ObjectId.isValid(eventID)) {
+		if (mongoose.Types.ObjectId.isValid(setID)) {
 			Set.deleteOne({ _id: mongoose.Types.ObjectId(setID) }).exec().then(result => {
 				if (result.deletedCount > 0) {
 					res.status(200).json({
