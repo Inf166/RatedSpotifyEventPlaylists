@@ -77,7 +77,7 @@ router.post('/', (req, res, next) => {
                 }
 
                 if (trackID = req.body.trackID) {
-                    const validURI = trackURI.toString().match(REGEX);
+                    const validURI = trackID.toString().match(REGEX);
                     if (validURI) {
                         const trackID = validURI[2];
                         spotify.getAccessToken().then(() => {
