@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const requestSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    _setID: mongoose.Schema.Types.ObjectId,
+    set: { type: mongoose.Schema.Types.ObjectId, ref: 'Set', required: true },
     track_id: { type: String, required: true },
     name: { type: String, required: true },
     artist: { type: String, required: true },

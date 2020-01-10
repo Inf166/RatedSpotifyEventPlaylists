@@ -3,8 +3,9 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 const Set = require('../models/set');
+const Event = require('../models/event');
 
-const querySelect = '_id _eventID name description';
+const querySelect = '_id event name description';
 
 router.get('/', (req, res, next) => {
 	Set.find().select(querySelect).exec().then(sets => {
@@ -58,42 +59,71 @@ router.get('/:setID', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	if ((name = req.body.name) && (description = req.body.description) && (eventID = req.body.eventID)) {
-		const set = new Set({
-			_id: mongoose.Types.ObjectId(),
-			_eventID: mongoose.Types.ObjectId(eventID),
-			name: name,
-			description: description
-		});
-
-		set.save().then(result => {
-			res.status(201).json({
-				message: 'OK',
-				result: { 
-					_id: result.id,
-					_eventID: result._eventID,
-					name: result.name,
-					description: result.description
+	if (eventID = req.body.eventID) {
+		if (mongoose.Types.ObjectId.isValid(eventID)) {
+            Event.findById(eventID).then(event => {
+                if (!event) {
+                    return res.status(404).json({
+                        message: 'Not Found',
+                        error: 'Invalid Property: eventID'
+                    });
 				}
-			});
-		}).catch(err => {
-			console.log(err);
-			res.status(500).json({
-				message: 'Internal Server Error',
-				error: err
-			});
-		});
+
+				if ((name = req.body.name) && (description = req.body.description)) {
+					const set = new Set({
+						_id: mongoose.Types.ObjectId(),
+						event: mongoose.Types.ObjectId(eventID),
+						name: name,
+						description: description
+					});
+			
+					set.save().then(result => {
+						res.status(201).json({
+							message: 'OK',
+							result: { 
+								_id: result.id,
+								event: result.event,
+								name: result.name,
+								description: result.description
+							}
+						});
+					}).catch(err => {
+						console.log(err);
+						res.status(500).json({
+							message: 'Internal Server Error',
+							error: err
+						});
+					});
+				} else {
+					var missing = [];
+					if (!req.body.name) {
+						missing.push('name');
+					}
+					if (!req.body.description) {
+						missing.push('description');
+					}
+					res.status(400).json({
+						message: 'Bad Request',
+						error: 'Missing Property: ' + missing.join(', ')
+					});
+				}
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    message: 'Internal Server Error',
+                    error: err
+                });
+            });
+		} else {
+			res.status(400).json({
+                message: 'Bad Request',
+                error: 'Invalid Property: eventID'
+            });
+		}
 	} else {
-		var missing = [];
-		if (!req.body.name) {
-			missing.push('name');
-		}
-		if (!req.body.description) {
-			missing.push('description');
-		}
         res.status(400).json({
             message: 'Bad Request',
-            error: 'Missing Property: ' + missing.join(', ')
+            error: 'Missing Property: eventID'
         });
 	}
 });
