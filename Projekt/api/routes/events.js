@@ -3,8 +3,10 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 const Event = require('../models/event');
+const Set = require('../models/set');
 
 const querySelect = '_id name location date topic';
+const querySelectSets = '_id name';
 
 router.get('/', (req, res, next) => {
 	Event.find().select(querySelect).exec().then(events => {
@@ -26,9 +28,24 @@ router.get('/:eventID', (req, res, next) => {
 		if (mongoose.Types.ObjectId.isValid(eventID)) {
 			Event.findById(eventID).select(querySelect).exec().then(event => {
 				if (event) {
-					res.status(200).json({
-						message: 'OK',
-						result: event
+					Set.find({ event: mongoose.Types.ObjectId(eventID) }).select(querySelectSets).exec().then(sets => {
+						res.status(200).json({
+							message: 'OK',
+							result: {
+								_id: event._id,
+								name: event.name,
+								location: event.location,
+								date: event.date,
+								topic: event.topic,
+								sets: sets
+							}
+						});
+					}).catch(err => {
+						console.log(err);
+						res.status(500).json({
+							message: 'Internal Server Error',
+							error: err
+						});
 					});
 				} else {
 					res.status(404).json({
