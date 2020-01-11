@@ -92,11 +92,10 @@ function post (path, content) {
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            var json = JSON.parse(request.responseText);
-            document.getElementById("output").innerHTML = JSON.stringify(json, null, 4);
+        if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Eintrag wurde erfolgreich hinzugef&uml;gt.</h2>`;
         }else{
-            document.getElementById("output").innerHTML = request.status;
+            document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
     };
     var data = JSON.stringify(content);
@@ -170,6 +169,7 @@ function get(uri, displaystyle) {
                     <th>Song Energie</th>
                     <th>Song Instrumentalit&auml;t</th>
                     <th>Song Lebendigkeit</th>
+                    <th>Song Lautst&auml;rke</th>
                     <th>Song Sprachlastigkeit</th>
                     <th>Song Key</th>
                     <th>Song BPM</th>
@@ -202,7 +202,7 @@ function get(uri, displaystyle) {
             `;
         }
     } else {
-        document.getElementById("output").innerHTML = request.status;
+        document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
     }
 }
 
@@ -215,11 +215,10 @@ function deletestuff(uri, content){
     request.open("DELETE", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
-        if (request.readyState === 4 && request.status === 200) {
-            var json = JSON.parse(request.responseText);
-            document.getElementById("output").innerHTML = "Erfolgreich gelöscht";
+        if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Erfolgreich gelöscht</h2>`;
         }else{
-            document.getElementById("output").innerHTML = request.status;
+            document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
     };
     var data = JSON.stringify(content);
