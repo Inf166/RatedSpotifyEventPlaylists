@@ -157,12 +157,23 @@ function get(uri, displaystyle) {
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
-                    <th>RequestID</th>
-                    <th>Request SetID</th>
-                    <th>Request Set Name</th>
-                    <th>Request Artist</th>
-                    <th>Request BPM</th>
-                    <th>Request Populatit&auml;t</th>
+                    <th>SongID</th>
+                    <th>Song SetID</th>
+                    <th>Song Set Name</th>
+                    <th>Song SpotifyID</th>
+                    <th>Song Name</th>
+                    <th>Song Artist</th>
+                    <th>Song L&auml;nge</th>
+                    <th>Song Populatit&auml;t</th>
+                    <th>Song Akustik</th>
+                    <th>Song Tanzbarkeit</th>
+                    <th>Song Energie</th>
+                    <th>Song Instrumentalit&auml;t</th>
+                    <th>Song Lebendigkeit</th>
+                    <th>Song Sprachlastigkeit</th>
+                    <th>Song Key</th>
+                    <th>Song BPM</th>
+                   
                 </tr>
                 ${data.result.map((request)=>{
                     return `
@@ -170,9 +181,21 @@ function get(uri, displaystyle) {
                         <td>${request._id}</td>
                         <td>${request.set._id}</td>
                         <td>${request.set.name}</td>
+                        <td>${request.track_id}</td>
+                        <td>${request.name}</td>
                         <td>${request.artist}</td>
-                        <td>${request.tempo}</td>
+                        <td>${(request.duration_ms/1000/60).toFixed(2)} min</td>
                         <td>${request.popularity}</td>
+                        <td>${request.acousticness}</td>
+                        <td>${request.danceability}</td>
+                        <td>${request.energy}</td>
+                        <td>${request.instrumentalness}</td>
+                        <td>${request.liveness}</td>
+                        <td>${request.loudness}</td>
+                        <td>${request.speechiness}</td>
+                        <td>${request.valence}</td>
+                        <td>${request.tempo}</td>
+                        
                     </tr>`
                 }).join('')}
             </table>
