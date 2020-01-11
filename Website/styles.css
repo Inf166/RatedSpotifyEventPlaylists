@@ -10,11 +10,18 @@ fieldset {
 }
 input[type=button] {
     /* font-family: 'Oswald', sans-serif; */
+    background-color: lightgrey;
     font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 1000;
     border: none;
     border-radius: 5px;
     padding: 10px;
     margin: 5px;
+    margin-top: 15px;
+}
+input[type=button]:active {
+    background-color: darkgray;
 }
 input[type=text] {
     border: rgba(185, 185, 185, 0.275) solid 1px;
@@ -52,6 +59,9 @@ p {
     grid-row: 2 / 3;
     overflow-y: scroll;
     overflow-x: scroll;
+}
+.output table tr th {
+    font-weight: bold;
 }
 form {
     display: none;

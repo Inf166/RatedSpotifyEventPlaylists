@@ -62,7 +62,8 @@ document.getElementById("createRequest").onclick = function () {
 document.getElementById("newGET").onclick = function () { 
     var getSearchedUri = document.getElementById("getSearchedUri").value;
     var uri = serviceURL + getSearchedUri;
-    get(uri);
+    var displaystyle = getSearchedUri.split('/', 1);
+    get(uri, displaystyle);
 };
 document.getElementById("newDelete").onclick = function () { 
     var deleteUri = document.getElementById("deleteUri").value;
@@ -96,20 +97,87 @@ function post (path, content) {
             document.getElementById("output").innerHTML = JSON.stringify(json, null, 4);
         }else{
             document.getElementById("output").innerHTML = request.status;
-            document.getElementById("output").innerHTML = request.responseText;
         }
     };
     var data = JSON.stringify(content);
     request.send(data);
 }
 
-function get(uri) {
+function get(uri, displaystyle) {
     var request = new XMLHttpRequest();
     request.open('GET', uri, true);
     request.onload = function() {
     var data = JSON.parse(request.response);
     if (request.status >= 200 && request.status < 400) {
-        document.getElementById("output").innerHTML = JSON.stringify(data.result, null, 4);
+        document.getElementById("output").innerHTML = JSON.stringify(data.result.join(''), null, 4);
+        console.log(data.result);     
+        if(displaystyle[0] === 'sets'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <table>
+                <tr>
+                    <th>EventID</th>
+                    <th>SetID</th>
+                    <th>Set Name</th>
+                    <th>Set Beschreibung</th>
+                </tr>
+                ${data.result.map((set)=>{
+                    return `
+                    <tr>
+                        <td>${set.event._id}</td>
+                        <td>${set._id}</td>
+                        <td>${set.name}</td>
+                        <td>${set.description}</td>
+                    </tr>`
+                }).join('')}
+            </table>
+            `;
+        }else if(displaystyle[0]==='events'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <table>
+                <tr>
+                    <th>EventID</th>
+                    <th>Event Name</th>
+                    <th>Event Standort</th>
+                    <th>Event Datum</th>
+                    <th>Event Thema</th>
+                </tr>
+                ${data.result.map((event)=>{
+                    return `
+                    <tr>
+                        <td>${event._id}</td>
+                        <td>${event.name}</td>
+                        <td>${event.location}</td>
+                        <td>${event.date}</td>
+                        <td>${event.topic}</td>
+                    </tr>`
+                }).join('')}
+            </table>
+            `;
+        }else if(displaystyle[0]==='requests'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <table>
+                <tr>
+                    <th>RequestID</th>
+                    <th>Request SetID</th>
+                    <th>Request Set Name</th>
+                    <th>Request Artist</th>
+                    <th>Request BPM</th>
+                    <th>Request Populatit&auml;t</th>
+                </tr>
+                ${data.result.map((request)=>{
+                    return `
+                    <tr>
+                        <td>${request._id}</td>
+                        <td>${request.set._id}</td>
+                        <td>${request.set.name}</td>
+                        <td>${request.artist}</td>
+                        <td>${request.tempo}</td>
+                        <td>${request.popularity}</td>
+                    </tr>`
+                }).join('')}
+            </table>
+            `;
+        }
     } else {
         document.getElementById("output").innerHTML = request.status;
     }
