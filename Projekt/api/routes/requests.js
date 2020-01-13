@@ -80,70 +80,85 @@ router.post('/', (req, res, next) => {
                     const validURI = trackID.toString().match(REGEX);
                     if (validURI) {
                         const trackID = validURI[2];
-                        spotify.getAccessToken().then(() => {
-                            spotify.getTrack(trackID).then(data => {
-                                const request = new Request({
-                                    _id: mongoose.Types.ObjectId(),
-                                    set: mongoose.Types.ObjectId(setID),
-                                    track_id: data.track_id,
-                                    name: data.name,
-                                    artist: data.artist,
-                                    duration_ms: data.duration_ms,
-                                    popularity: data.popularity,
-                                    acousticness: data.acousticness,
-                                    danceability: data.danceability,
-                                    energy: data.energy,
-                                    instrumentalness: data.instrumentalness,
-                                    liveness: data.liveness,
-                                    loudness: data.loudness,
-                                    speechiness: data.speechiness,
-                                    valence: data.valence,
-                                    tempo: data.tempo
+                        Request.countDocuments({ set: mongoose.Types.ObjectId(setID), track_id: trackID }).then(count => {
+                            if (count > 0) {
+                                return res.status(400).json({
+                                    message: 'Bad Request',
+                                    error: 'Request Exists Already.'
                                 });
-                
-                                request.save().then(result => {
-                                    res.status(201).json({
-                                        message: 'OK',
-                                        result: { 
-                                            _id: result.id,
-                                            set: result.set,
-                                            track_id: result.track_id,
-                                            name: result.name,
-                                            artist: result.artist,
-                                            duration_ms: result.duration_ms,
-                                            popularity: result.popularity,
-                                            acousticness: result.acousticness,
-                                            danceability: result.danceability,
-                                            energy: result.energy,
-                                            instrumentalness: result.instrumentalness,
-                                            liveness: result.liveness,
-                                            loudness: result.loudness,
-                                            speechiness: result.speechiness,
-                                            valence: result.valence,
-                                            tempo: result.tempo
+                            } else {
+                                spotify.getAccessToken().then(() => {
+                                    spotify.getTrack(trackID).then(data => {
+                                        const request = new Request({
+                                            _id: mongoose.Types.ObjectId(),
+                                            set: mongoose.Types.ObjectId(setID),
+                                            track_id: data.track_id,
+                                            name: data.name,
+                                            artist: data.artist,
+                                            duration_ms: data.duration_ms,
+                                            popularity: data.popularity,
+                                            acousticness: data.acousticness,
+                                            danceability: data.danceability,
+                                            energy: data.energy,
+                                            instrumentalness: data.instrumentalness,
+                                            liveness: data.liveness,
+                                            loudness: data.loudness,
+                                            speechiness: data.speechiness,
+                                            valence: data.valence,
+                                            tempo: data.tempo
+                                        });
+                        
+                                        request.save().then(result => {
+                                            res.status(201).json({
+                                                message: 'OK',
+                                                result: { 
+                                                    _id: result.id,
+                                                    set: result.set,
+                                                    track_id: result.track_id,
+                                                    name: result.name,
+                                                    artist: result.artist,
+                                                    duration_ms: result.duration_ms,
+                                                    popularity: result.popularity,
+                                                    acousticness: result.acousticness,
+                                                    danceability: result.danceability,
+                                                    energy: result.energy,
+                                                    instrumentalness: result.instrumentalness,
+                                                    liveness: result.liveness,
+                                                    loudness: result.loudness,
+                                                    speechiness: result.speechiness,
+                                                    valence: result.valence,
+                                                    tempo: result.tempo
+                                                }
+                                            });
+                                        }).catch(err => {
+                                            console.log(err);
+                                            res.status(500).json({
+                                                message: 'Internal Server Error',
+                                                error: err
+                                            });
+                                        });
+                                    }).catch(err => {
+                                        if (err == 'invalidTrackID' || err.message == 'Bad Request') {
+                                            res.status(400).json({
+                                                message: 'Bad Request',
+                                                error: 'Invalid Property: trackID'
+                                            });
+                                        } else {
+                                            res.status(500).json({
+                                                message: 'Internal Server Error',
+                                                error: err.message
+                                            });
                                         }
                                     });
                                 }).catch(err => {
-                                    console.log(err);
                                     res.status(500).json({
                                         message: 'Internal Server Error',
                                         error: err
                                     });
                                 });
-                            }).catch(err => {
-                                if (err == 'invalidTrackID' || err.message == 'Bad Request') {
-                                    res.status(400).json({
-                                        message: 'Bad Request',
-                                        error: 'Invalid Property: trackID'
-                                    });
-                                } else {
-                                    res.status(500).json({
-                                        message: 'Internal Server Error',
-                                        error: err.message
-                                    });
-                                }
-                            });
+                            }
                         }).catch(err => {
+                            console.log(err);
                             res.status(500).json({
                                 message: 'Internal Server Error',
                                 error: err
