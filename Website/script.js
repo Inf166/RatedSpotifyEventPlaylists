@@ -1,5 +1,5 @@
 var serviceURL = "http://localhost:3000/";
-
+const notes = [ 'C', 'C#', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A', 'b', 'B' ];
 
 // Action Listner für die Navigation
 
@@ -23,7 +23,6 @@ document.getElementById("openDelete").onclick = function () {
     hideAllbut("formNewDelete");
     document.getElementById("formNewDelete").style.display = "block";
 };
-
 // Schließt alle anderen offenen Operationen
 function hideAllbut(openOperation){
     if(openOperation !="formCreateRequest") document.getElementById("formCreateRequest").style.display = "none";
@@ -34,7 +33,7 @@ function hideAllbut(openOperation){
 }
 
 // Action Listner für die Submit-Buttons
-document.getElementById("createEvent").onclick = function () { 
+document.getElementById("createEvent").onclick = function newEvent() { 
     var eventName = document.getElementById("eventName").value;
     var eventLocation = document.getElementById("eventLocation").value;
     var eventDate = document.getElementById("eventDate").value;
@@ -43,7 +42,7 @@ document.getElementById("createEvent").onclick = function () {
     var newpath = serviceURL + "events/";
     post(newpath, newEvent);
 };
-document.getElementById("createSet").onclick = function () { 
+document.getElementById("createSet").onclick = function newSet() { 
     var setEventId = document.getElementById("setEventId").value;
     var setName = document.getElementById("setName").value;
     var setDescription = document.getElementById("setDescription").value;
@@ -51,15 +50,14 @@ document.getElementById("createSet").onclick = function () {
     var newpath = serviceURL + "sets/";
     post(newpath, newSet);
 };
-document.getElementById("createRequest").onclick = function () { 
+document.getElementById("createRequest").onclick = function newRequest() { 
     var requestSetId = document.getElementById("requestSetId").value;
     var requestTrackUri = document.getElementById("requestTrackUri").value;
-    // if (requestTrackUri.startsWith('https://open.spotify.com/track/')) requestTrackUri = requestTrackUri.slice(31,requestTrackUri.length);
     var newRequest = {"setID" : requestSetId, "trackID" : requestTrackUri};
     var newpath = serviceURL + "requests/";
     post(newpath, newRequest);
 };
-document.getElementById("newGET").onclick = function () { 
+document.getElementById("newGET").onclick = function newGet() { 
     var getSearchedUri = document.getElementById("getSearchedUri").value;
     var uri = serviceURL + getSearchedUri;
     var displaystyle = getSearchedUri.split('/', 1);
@@ -68,7 +66,7 @@ document.getElementById("newGET").onclick = function () {
     console.log(chooser);
     get(uri, chooser);
 };
-document.getElementById("newDelete").onclick = function () { 
+document.getElementById("newDelete").onclick = function newDelete() { 
     var deleteUri = document.getElementById("deleteUri").value;
     var temp;
     var radios = document.getElementsByName('tobedeleted');
@@ -79,7 +77,9 @@ document.getElementById("newDelete").onclick = function () {
       }
     }
     var newDelete;
-    if(temp === "events/"){
+    if(temp === "requests/"){
+        newDelete = {"songID" : deleteUri};
+    } if(temp === "events/"){
         newDelete = {"eventID" : deleteUri};
     } else {
         newDelete = {"setID" : deleteUri};
@@ -96,7 +96,7 @@ function post (path, content) {
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
-            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Eintrag wurde erfolgreich hinzugef&uml;gt.</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Eintrag wurde erfolgreich hinzugef&uuml;gt.</h2>`;
         }else{
             document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
@@ -124,6 +124,7 @@ function get(uri, displaystyle) {
                     <th>   Name</th>
                     <th>   Artist</th>
                     <th>   L&auml;nge</th>
+                    <th>   Abgestimmt</th>
                     <th>   Populatit&auml;t</th>
                     <th>   Akustik</th>
                     <th>   Tanzbarkeit</th>
@@ -142,6 +143,7 @@ function get(uri, displaystyle) {
                     <td>${data.result.name}</td>
                     <td>${data.result.artist}</td>
                     <td>${(data.result.duration_ms/1000/60).toFixed(2)} min </td>
+                    <td>${data.result.votes}</td>
                     <td>${data.result.popularity}</td>
                     <td>${data.result.acousticness}</td>
                     <td>${data.result.danceability}</td>
@@ -150,7 +152,7 @@ function get(uri, displaystyle) {
                     <td>${data.result.liveness}</td>
                     <td>${data.result.loudness}</td>
                     <td>${data.result.speechiness}</td>
-                    <td>${data.result.valence}</td>
+                    <td>${data.result.key >= 0 && data.result.key <= 11 ? notes[data.result.key] : 'no key'}</td>
                     <td>${data.result.tempo}</td>
                 </tr>
             </table>
@@ -176,20 +178,21 @@ function get(uri, displaystyle) {
             <table>
                 <tr>
                     <th>SongID</th>
-                    <th>  SpotifyID</th>
-                    <th>  Name</th>
-                    <th>  Artist</th>
-                    <th>  L&auml;nge</th>
-                    <th>  Populatit&auml;t</th>
-                    <th>  Akustik</th>
-                    <th>  Tanzbarkeit</th>
-                    <th>  Energie</th>
-                    <th>  Instrumentalit&auml;t</th>
-                    <th>  Lebendigkeit</th>
-                    <th>  Lautst&auml;rke</th>
-                    <th>  Sprachlastigkeit</th>
-                    <th>  Key</th>
-                    <th>  BPM</th>
+                    <th>   SpotifyID</th>
+                    <th>   Name</th>
+                    <th>   Artist</th>
+                    <th>   L&auml;nge</th>
+                    <th>   Abgestimmt</th>
+                    <th>   Populatit&auml;t</th>
+                    <th>   Akustik</th>
+                    <th>   Tanzbarkeit</th>
+                    <th>   Energie</th>
+                    <th>   Instrumentalit&auml;t</th>
+                    <th>   Lebendigkeit</th>
+                    <th>   Lautst&auml;rke</th>
+                    <th>   Sprachlastigkeit</th>
+                    <th>   Key</th>
+                    <th>   BPM</th>
                    
                 </tr>
                 ${data.result.requests.map((request)=>{
@@ -200,6 +203,7 @@ function get(uri, displaystyle) {
                         <td>${request.name}</td>
                         <td>${request.artist}</td>
                         <td>${(request.duration_ms/1000/60).toFixed(2)} min</td>
+                        <td>${data.result.votes}</td>
                         <td>${request.popularity}</td>
                         <td>${request.acousticness}</td>
                         <td>${request.danceability}</td>
@@ -208,7 +212,7 @@ function get(uri, displaystyle) {
                         <td>${request.liveness}</td>
                         <td>${request.loudness}</td>
                         <td>${request.speechiness}</td>
-                        <td>${request.valence}</td>
+                        <td>${request.key >= 0 && request.key <= 11 ? notes[request.key] : 'no key'}</td>
                         <td>${request.tempo}</td>
                     </tr>`;
                 }).join('')}
@@ -229,7 +233,7 @@ function get(uri, displaystyle) {
                 <td>${data.result._id}</td>
                 <td>${data.result.name}</td>
                 <td>${data.result.location}</td>
-                <td>${data.result.date}</td>
+                <td>${(JSON.stringify(data.result.date)).slice(0,2) +'.'+ (JSON.stringify(data.result.date)).slice(2,4) + '.' + (JSON.stringify(data.result.date)).slice(4) }</td>
                 <td>${data.result.topic}</td>
             </tr>
         </table>
@@ -356,7 +360,7 @@ function deletestuff(uri, content){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
-            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Erfolgreich gelöscht</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Erfolgreich gel&ouml;scht</h2>`;
         }else{
             document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
