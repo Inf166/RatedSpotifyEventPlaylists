@@ -45,6 +45,7 @@ module.exports = function() {
                         let speechiness = audioFeatures.speechiness;
                         let valence = audioFeatures.valence;
                         let tempo = audioFeatures.tempo;
+                        let key = audioFeatures.key;
     
                         let trackData = {
                             track_id: trackID,
@@ -60,7 +61,8 @@ module.exports = function() {
                             loudness: loudness,
                             speechiness: speechiness,
                             valence: valence,
-                            tempo: tempo
+                            tempo: tempo,
+                            key: key
                         };
 
                         resolve(trackData);

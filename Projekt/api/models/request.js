@@ -16,7 +16,8 @@ const requestSchema = mongoose.Schema({
     loudness: { type: Number, required: true },
     speechiness: { type: Number, required: true },
     valence: { type: Number, required: true },
-    tempo: { type: Number, required: true }
+    tempo: { type: Number, required: true },
+    key: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Request', requestSchema);

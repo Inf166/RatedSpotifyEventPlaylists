@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const Request = require('../models/request');
 const Set = require('../models/set');
 
-const querySelect = '_id set track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
+const querySelect = '_id set track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo key';
 
 // https://open.spotify.com/track/TRACKID?XYZ
 // spotify:track:TRACKID
@@ -105,7 +105,8 @@ router.post('/', (req, res, next) => {
                                             loudness: data.loudness,
                                             speechiness: data.speechiness,
                                             valence: data.valence,
-                                            tempo: data.tempo
+                                            tempo: data.tempo,
+                                            key: data.key
                                         });
                         
                                         request.save().then(result => {
@@ -127,7 +128,8 @@ router.post('/', (req, res, next) => {
                                                     loudness: result.loudness,
                                                     speechiness: result.speechiness,
                                                     valence: result.valence,
-                                                    tempo: result.tempo
+                                                    tempo: result.tempo,
+                                                    key: result.key
                                                 }
                                             });
                                         }).catch(err => {
