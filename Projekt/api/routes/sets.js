@@ -7,7 +7,7 @@ const Event = require('../models/event');
 const Request = require('../models/request');
 
 const querySelect = '_id event name description';
-const querySelectRequests = '_id track_id';
+const querySelectRequests = '_id track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo';
 
 router.get('/', (req, res, next) => {
 	Set.find().select(querySelect).populate('event', 'name').exec().then(sets => {

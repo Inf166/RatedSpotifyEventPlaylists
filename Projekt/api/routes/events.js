@@ -6,7 +6,7 @@ const Event = require('../models/event');
 const Set = require('../models/set');
 
 const querySelect = '_id name location date topic';
-const querySelectSets = '_id name';
+const querySelectSets = '_id name description';
 
 router.get('/', (req, res, next) => {
 	Event.find().select(querySelect).exec().then(events => {
