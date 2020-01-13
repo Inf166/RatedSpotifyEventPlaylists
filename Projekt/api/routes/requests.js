@@ -82,9 +82,36 @@ router.post('/', (req, res, next) => {
                         const trackID = validURI[2];
                         Request.countDocuments({ set: mongoose.Types.ObjectId(setID), track_id: trackID }).then(count => {
                             if (count > 0) {
-                                return res.status(400).json({
-                                    message: 'Bad Request',
-                                    error: 'Request Exists Already.'
+                                Request.findOneAndUpdate( { set: mongoose.Types.ObjectId(setID), track_id: trackID }, { $inc: { votes: 1 } }, { new: true }).then(request => {
+                                    res.status(200).json({
+                                        message: 'OK',
+                                        result: { 
+                                            _id: request.id,
+                                            set: request.set,
+                                            track_id: request.track_id,
+                                            name: request.name,
+                                            artist: request.artist,
+                                            duration_ms: request.duration_ms,
+                                            popularity: request.popularity,
+                                            acousticness: request.acousticness,
+                                            danceability: request.danceability,
+                                            energy: request.energy,
+                                            instrumentalness: request.instrumentalness,
+                                            liveness: request.liveness,
+                                            loudness: request.loudness,
+                                            speechiness: request.speechiness,
+                                            valence: request.valence,
+                                            tempo: request.tempo,
+                                            key: request.key,
+                                            votes: request.votes
+                                        }
+                                    });
+                                }).catch(err => {
+                                    console.log(err);
+                                    res.status(500).json({
+                                        message: 'Internal Server Error',
+                                        error: err
+                                    });
                                 });
                             } else {
                                 spotify.getAccessToken().then(() => {
@@ -129,7 +156,8 @@ router.post('/', (req, res, next) => {
                                                     speechiness: result.speechiness,
                                                     valence: result.valence,
                                                     tempo: result.tempo,
-                                                    key: result.key
+                                                    key: result.key,
+                                                    votes: result.votes
                                                 }
                                             });
                                         }).catch(err => {

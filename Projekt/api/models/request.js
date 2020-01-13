@@ -17,7 +17,8 @@ const requestSchema = mongoose.Schema({
     speechiness: { type: Number, required: true },
     valence: { type: Number, required: true },
     tempo: { type: Number, required: true },
-    key: { type: Number, required: true }
+    key: { type: Number, required: true },
+    votes: { type: Number, default: 1 }
 });
 
 module.exports = mongoose.model('Request', requestSchema);
