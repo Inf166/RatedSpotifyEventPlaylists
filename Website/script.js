@@ -59,12 +59,30 @@ document.getElementById("createRequest").onclick = function newRequest() {
 };
 document.getElementById("newGET").onclick = function newGet() { 
     var getSearchedUri = document.getElementById("getSearchedUri").value;
-    var uri = serviceURL + getSearchedUri;
-    var displaystyle = getSearchedUri.split('/', 1);
-    var chooser = displaystyle[0];
-    if(getSearchedUri.length >=10)chooser = chooser + '/detail';
-    console.log(chooser);
-    get(uri, chooser);
+    
+    var isDetailFor;
+    var radioslookingfor = document.getElementsByName('lookingfor');
+    for (var i = 0, length = radioslookingfor.length; i < length; i++) {
+      if (radioslookingfor[i].checked) {
+          isDetailFor = radioslookingfor[i].value;
+        break;
+      }
+    }
+    var displaystyle = isDetailFor;
+    if(getSearchedUri.length >=10)displaystyle = isDetailFor + 'detail';
+
+    var searchquery = '';
+    var radiossearchquery = document.getElementsByName('searchquery');
+    for (var i = 0, length = radiossearchquery.length; i < length; i++) {
+      if (radiossearchquery[i].checked) {
+        searchquery = radiossearchquery[i].value;
+        break;
+      }
+    }
+    var uri = serviceURL + isDetailFor + getSearchedUri + searchquery
+    console.log('Uri: ' + uri);
+    console.log('Displaystyle: ' + isDetailFor);
+    get(uri, displaystyle);
 };
 document.getElementById("newDelete").onclick = function newDelete() { 
     var deleteUri = document.getElementById("deleteUri").value;
@@ -96,9 +114,9 @@ function post (path, content) {
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
-            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Eintrag wurde erfolgreich hinzugef&uuml;gt.</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">> [${request.status}] Eintrag wurde erfolgreich hinzugef&uuml;gt.</h2>`;
         }else{
-            document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: red;">> [${request.status}] Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
     };
     var data = JSON.stringify(content);
@@ -115,7 +133,7 @@ function get(uri, displaystyle) {
         console.log(data.result);     
         console.log(displaystyle);
         if(displaystyle === 'requests/detail'){
-            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            document.getElementById("output").innerHTML = `
             <h2>Song Infos</h2>
             <table>
                 <tr>
@@ -158,7 +176,7 @@ function get(uri, displaystyle) {
             </table>
             `;
         }else if(displaystyle === 'sets/detail'){
-            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            document.getElementById("output").innerHTML = `
             <h2>Set Info</h2>
             <table>
                 <tr>
@@ -203,7 +221,7 @@ function get(uri, displaystyle) {
                         <td>${request.name}</td>
                         <td>${request.artist}</td>
                         <td>${(request.duration_ms/1000/60).toFixed(2)} min</td>
-                        <td>${data.result.votes}</td>
+                        <td>${request.votes}</td>
                         <td>${request.popularity}</td>
                         <td>${request.acousticness}</td>
                         <td>${request.danceability}</td>
@@ -219,7 +237,7 @@ function get(uri, displaystyle) {
             </table>
             `;
         }else if(displaystyle === 'events/detail'){
-            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            document.getElementById("output").innerHTML = `
             <h2>Event Infos</h2>
             <table>
             <tr>
@@ -254,7 +272,7 @@ function get(uri, displaystyle) {
         }).join('')}
             </table>
             `;
-        }else if(displaystyle === 'sets'){
+        }else if(displaystyle === 'sets/'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
@@ -274,7 +292,7 @@ function get(uri, displaystyle) {
                 }).join('')}
             </table>
             `;
-        }else if(displaystyle ==='events'){
+        }else if(displaystyle ==='events/'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
@@ -296,39 +314,37 @@ function get(uri, displaystyle) {
                 }).join('')}
             </table>
             `;
-        }else if(displaystyle ==='requests'){
+        }else if(displaystyle ==='requests/'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
                     <th>SongID</th>
-                    <th>Song SetID</th>
-                    <th>Song Set Name</th>
-                    <th>Song SpotifyID</th>
-                    <th>Song Name</th>
-                    <th>Song Artist</th>
-                    <th>Song L&auml;nge</th>
-                    <th>Song Populatit&auml;t</th>
-                    <th>Song Akustik</th>
-                    <th>Song Tanzbarkeit</th>
-                    <th>Song Energie</th>
-                    <th>Song Instrumentalit&auml;t</th>
-                    <th>Song Lebendigkeit</th>
-                    <th>Song Lautst&auml;rke</th>
-                    <th>Song Sprachlastigkeit</th>
-                    <th>Song Key</th>
-                    <th>Song BPM</th>
+                    <th>   SpotifyID</th>
+                    <th>   Name</th>
+                    <th>   Artist</th>
+                    <th>   L&auml;nge</th>
+                    <th>   Abgestimmt</th>
+                    <th>   Populatit&auml;t</th>
+                    <th>   Akustik</th>
+                    <th>   Tanzbarkeit</th>
+                    <th>   Energie</th>
+                    <th>   Instrumentalit&auml;t</th>
+                    <th>   Lebendigkeit</th>
+                    <th>   Lautst&auml;rke</th>
+                    <th>   Sprachlastigkeit</th>
+                    <th>   Key</th>
+                    <th>   BPM</th>
                    
                 </tr>
                 ${data.result.map((request)=>{
                     return `
                     <tr>
                         <td>${request._id}</td>
-                        <td>${request.set._id}</td>
-                        <td>${request.set.name}</td>
                         <td>${request.track_id}</td>
                         <td>${request.name}</td>
                         <td>${request.artist}</td>
                         <td>${(request.duration_ms/1000/60).toFixed(2)} min</td>
+                        <td>${request.votes}</td>
                         <td>${request.popularity}</td>
                         <td>${request.acousticness}</td>
                         <td>${request.danceability}</td>
@@ -337,16 +353,15 @@ function get(uri, displaystyle) {
                         <td>${request.liveness}</td>
                         <td>${request.loudness}</td>
                         <td>${request.speechiness}</td>
-                        <td>${request.valence}</td>
+                        <td>${request.key >= 0 && request.key <= 11 ? notes[request.key] : 'no key'}</td>
                         <td>${request.tempo}</td>
-                        
                     </tr>`;
                 }).join('')}
             </table>
             `;
         }
     } else {
-        document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
+        document.getElementById("output").innerHTML = `<h2 style="color: red;">> [${request.status}] Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
     }
 }
 
@@ -360,9 +375,9 @@ function deletestuff(uri, content){
     request.setRequestHeader("Content-Type", "application/json");
     request.onreadystatechange = function () {
         if (request.readyState === 4 && request.status >= 200 && request.status <= 300) {
-            document.getElementById("output").innerHTML = `<h2 style="color: green;">${request.status} Erfolgreich gel&ouml;scht</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: green;">> [${request.status}] Erfolgreich gel&ouml;scht</h2>`;
         }else{
-            document.getElementById("output").innerHTML = `<h2 style="color: red;">${request.status} Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
+            document.getElementById("output").innerHTML = `<h2 style="color: red;">> [${request.status}] Ein Fehler ist aufgetreten: ${request.responseText}</h2>`;
         }
     };
     var data = JSON.stringify(content);

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600&display=swap" rel="stylesheet">
     <!-- <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet"> -->
     <title>Chartliste</title>
 </head>
@@ -38,7 +39,7 @@
     
     <form id="formCreateSet">
         <h2>Set erstellen</h2>
-        <p>Zugeh&ouml;rige Event ID:</p>
+        <p>Zugeh&ouml;rige EventID:</p>
         <input id="setEventId" type="text" name="eventID" value="">
         <p>Set Name:</p>
         <input id="setName" type="text" name="name" value="">
@@ -51,30 +52,55 @@
         <h2>Songvorschlag machen</h2>
         <p>Zugehörige SetID:</p>
         <input id="requestSetId" type="text" name="setID" value="">
-        <p>Spotify Song ID oder Link:</p>
+        <p>Spotify SongID oder Link:</p>
         <input id="requestTrackUri" type="text" name="trackID" value=""><br>
         <input id="createRequest" type="button" value="Jetzt vorschlagen">
     </form>
     
     <form id="formNewGET">
-        <h2>Du suchst etwas bestimmtes?</h2>
-        <p>Dann trage hier den Pfad optional mit ID ein:</p>
+        <h2>Du suchst etwas Bestimmtes?</h2>
+        <p>Wonach suchst du?</p>
+        <fieldset>
+            <input type="radio" id="checkboxlookingforEvent" name="lookingfor" value="events/" checked="checked">
+            <label for="checkboxlookingforEvent"> Events</label> 
+            <input type="radio" id="checkboxlookingforSet" name="lookingfor" value="sets/">
+            <label for="checkboxlookingforSet"> Sets</label>
+            <input type="radio" id="checkboxlookingforRequest" name="lookingfor" value="requests/">
+            <label for="checkboxlookingforRequest"> Songvorschl&auml;ge</label>
+        </fieldset>
+        <p>(nur für Sets) Willst du die Abfrage sortieren?</p>
+        <fieldset>
+            <input type="radio" id="checkboxkeine" name="searchquery" value="" checked="checked">
+            <label for="checkboxkeine"> Keine</label>
+            <input type="radio" id="checkboxvotes" name="searchquery" value="?orderBy=votes">
+            <label for="checkboxvotes"> Abgestimmt</label>
+            <input type="radio" id="checkboxkey" name="searchquery" value="?orderBy=key">
+            <label for="checkboxkey"> Key</label> 
+            <input type="radio" id="checkboxartist" name="searchquery" value="?orderBy=artist">
+            <label for="checkboxartist"> Artist</label> 
+            <input type="radio" id="checkboxpopularity" name="searchquery" value="?orderBy=popularity">
+            <label for="checkboxpopularity"> Populatit&auml;t</label>
+            <input type="radio" id="checkboxtempo" name="searchquery" value="?orderBy=tempo">
+            <label for="checkboxtempo"> BPM</label>
+            
+        </fieldset>
+        <p>Du suchst nach einem bestimmten Eintrag? Erg&auml;nze hier die ID.</p>
         <input id="getSearchedUri" type="text" name="searchedPath" value=""><br>
         <input id="newGET" type="button" value="Jetzt Anfrage stellen">
     </form>
     
     <form id="formNewDelete">
-        <h2>! Löschen</h2>
+        <h2>Löschen - Vorsicht geboten</h2>
         <p>Bitte w&auml;hle das zu löschende Objekt:</p>
         <fieldset>
-            <input type="radio" id="checkboxEvent" name="tobedeleted" value="events/">
+            <input type="radio" id="checkboxDeleteEvent" name="tobedeleted" value="events/">
             <label for="checkboxEvent"> Event</label> 
-            <input type="radio" id="checkboxSet" name="tobedeleted" value="sets/">
+            <input type="radio" id="checkboxDeleteSet" name="tobedeleted" value="sets/">
             <label for="checkboxSet"> Set</label>
-            <input type="radio" id="checkboxRequest" name="tobedeleted" value="requests/">
+            <input type="radio" id="checkboxDeleteRequest" name="tobedeleted" value="requests/" checked="checked">
             <label for="checkboxSet"> Songvorschlag</label>
           </fieldset>
-        <p>Zulöschende Event oder Set ID:</p>
+        <p>Zulöschende Event-, Request- oder SetID:</p>
         <input id="deleteUri" type="text" name="deleteThisID" value=""><br>
         <input id="newDelete" type="button" value="Jetzt Löschen">
     </form>

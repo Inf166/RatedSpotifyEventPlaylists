@@ -10,7 +10,7 @@ fieldset {
 }
 input[type=button] {
     /* font-family: 'Oswald', sans-serif; */
-    background-color: lightgrey;
+    background-image: linear-gradient(#ffc400,#ff7b00);
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: 1000;
@@ -19,21 +19,27 @@ input[type=button] {
     padding: 10px;
     margin: 5px;
     margin-top: 15px;
-}
+}   
 input[type=button]:active {
-    background-color: darkgray;
+    background-image: linear-gradient(#ff7b00,#ffc400);
 }
 input[type=text] {
-    border: rgba(185, 185, 185, 0.275) solid 1px;
+    border: #ff7b0070 solid 1px;
     border-radius: 5px;
     padding: 10px;
     margin: 5px;
     width: 500px;
+    font-size: 16px;
 }
 .navigation {
     background-color: rgba(238, 238, 238, 0.275);
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    padding: 1.5em;
+}
+.navigation h1 {
+    color: #ff7b00ca;
+    text-transform: uppercase;
 }
 .navigation ul {
     list-style: none;
@@ -43,38 +49,37 @@ input[type=text] {
 }
 .navigation ul li a {
     text-decoration: none;
+    color: #ff7b00;
 }
 .operation {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
 }
 .operation form h2 {
-    /* text-transform: uppercase; */
-}
-p {
-   padding: 5px;
-   margin-bottom: 0 !important; 
-}
-.output {
-    background-color: rgba(185, 185, 185, 0.275);
-    grid-column: 1 / 3;
-    grid-row: 2 / 3;
-    overflow-y: scroll;
-    overflow-x: scroll;
-}
-.output table tr th {
-    font-weight: bold;
+    font-weight: bolder !important;
 }
 form {
     display: none;
     margin: 2.5em;
 }
-table {
+p {
+   padding: 5px;
+   margin-bottom: 0 !important; 
+   font-size: 18px;
+}
+.output {
+    background-color: rgba(215, 215, 215, 0.228);
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.output table {
     border-collapse: separate;
     border-spacing: 20px 1em;
 }
-table th {
-    font-weight: bolder;
+.output table tr th {
+    font-weight: bolder !important;
     text-align: left;
     min-width: 100px;
 }
