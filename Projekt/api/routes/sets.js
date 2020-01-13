@@ -29,7 +29,11 @@ router.get('/:setID', (req, res, next) => {
 		if (mongoose.Types.ObjectId.isValid(setID)) {
 			Set.findById(setID).select(querySelect).populate('event', 'name').exec().then(set => {
 				if (set) {
-					Request.find({ set: mongoose.Types.ObjectId(setID) }).select(querySelectRequests).exec().then(requests => {
+					var querySort = {};
+					if (req.query && req.query.orderBy)
+						querySort = { [req.query.orderBy]: 'desc' };
+
+					Request.find({ set: mongoose.Types.ObjectId(setID) }).select(querySelectRequests).sort(querySort).exec().then(requests => {
 						res.status(200).json({
 							message: 'OK',
 							result: {
