@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const Request = require('../models/request');
 const Set = require('../models/set');
 
-const querySelect = '_id set track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo key';
+const querySelect = '_id set track_id name artist duration_ms popularity acousticness danceability energy instrumentalness liveness loudness speechiness valence tempo key votes';
 
 // https://open.spotify.com/track/TRACKID?XYZ
 // spotify:track:TRACKID
