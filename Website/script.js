@@ -63,7 +63,10 @@ document.getElementById("newGET").onclick = function () {
     var getSearchedUri = document.getElementById("getSearchedUri").value;
     var uri = serviceURL + getSearchedUri;
     var displaystyle = getSearchedUri.split('/', 1);
-    get(uri, displaystyle);
+    var chooser = displaystyle[0];
+    if(getSearchedUri.length >=10)chooser = chooser + '/detail';
+    console.log(chooser);
+    get(uri, chooser);
 };
 document.getElementById("newDelete").onclick = function () { 
     var deleteUri = document.getElementById("deleteUri").value;
@@ -108,9 +111,146 @@ function get(uri, displaystyle) {
     request.onload = function() {
     var data = JSON.parse(request.response);
     if (request.status >= 200 && request.status < 400) {
-        document.getElementById("output").innerHTML = JSON.stringify(data.result.join(''), null, 4);
+        // document.getElementById("output").innerHTML = JSON.stringify(data.result.join(''), null, 4);
         console.log(data.result);     
-        if(displaystyle[0] === 'sets'){
+        console.log(displaystyle);
+        if(displaystyle === 'requests/detail'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <h2>Song Infos</h2>
+            <table>
+                <tr>
+                    <th>SongID</th>
+                    <th>   SpotifyID</th>
+                    <th>   Name</th>
+                    <th>   Artist</th>
+                    <th>   L&auml;nge</th>
+                    <th>   Populatit&auml;t</th>
+                    <th>   Akustik</th>
+                    <th>   Tanzbarkeit</th>
+                    <th>   Energie</th>
+                    <th>   Instrumentalit&auml;t</th>
+                    <th>   Lebendigkeit</th>
+                    <th>   Lautst&auml;rke</th>
+                    <th>   Sprachlastigkeit</th>
+                    <th>   Key</th>
+                    <th>   BPM</th>
+                   
+                </tr>
+                <tr>
+                    <td>${data.result._id}</td>
+                    <td>${data.result.track_id}</td>
+                    <td>${data.result.name}</td>
+                    <td>${data.result.artist}</td>
+                    <td>${(data.result.duration_ms/1000/60).toFixed(2)} min </td>
+                    <td>${data.result.popularity}</td>
+                    <td>${data.result.acousticness}</td>
+                    <td>${data.result.danceability}</td>
+                    <td>${data.result.energy}</td>
+                    <td>${data.result.instrumentalness}</td>
+                    <td>${data.result.liveness}</td>
+                    <td>${data.result.loudness}</td>
+                    <td>${data.result.speechiness}</td>
+                    <td>${data.result.valence}</td>
+                    <td>${data.result.tempo}</td>
+                </tr>
+            </table>
+            `;
+        }else if(displaystyle === 'sets/detail'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <h2>Set Info</h2>
+            <table>
+                <tr>
+                    <th>EventID</th>
+                    <th>SetID</th>
+                    <th> Name</th>
+                    <th> Beschreibung</th>
+                </tr>
+                <tr>
+                    <td>${data.result.event._id}</td>
+                    <td>${data.result._id}</td>
+                    <td>${data.result.name}</td>
+                    <td>${data.result.description}</td>
+                </tr>
+            </table>
+            <h2>Tracks</h2>
+            <table>
+                <tr>
+                    <th>SongID</th>
+                    <th>  SpotifyID</th>
+                    <th>  Name</th>
+                    <th>  Artist</th>
+                    <th>  L&auml;nge</th>
+                    <th>  Populatit&auml;t</th>
+                    <th>  Akustik</th>
+                    <th>  Tanzbarkeit</th>
+                    <th>  Energie</th>
+                    <th>  Instrumentalit&auml;t</th>
+                    <th>  Lebendigkeit</th>
+                    <th>  Lautst&auml;rke</th>
+                    <th>  Sprachlastigkeit</th>
+                    <th>  Key</th>
+                    <th>  BPM</th>
+                   
+                </tr>
+                ${data.result.requests.map((request)=>{
+                    return `
+                    <tr>
+                        <td>${request._id}</td>
+                        <td>${request.track_id}</td>
+                        <td>${request.name}</td>
+                        <td>${request.artist}</td>
+                        <td>${(request.duration_ms/1000/60).toFixed(2)} min</td>
+                        <td>${request.popularity}</td>
+                        <td>${request.acousticness}</td>
+                        <td>${request.danceability}</td>
+                        <td>${request.energy}</td>
+                        <td>${request.instrumentalness}</td>
+                        <td>${request.liveness}</td>
+                        <td>${request.loudness}</td>
+                        <td>${request.speechiness}</td>
+                        <td>${request.valence}</td>
+                        <td>${request.tempo}</td>
+                    </tr>`;
+                }).join('')}
+            </table>
+            `;
+        }else if(displaystyle === 'events/detail'){
+            document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
+            <h2>Event Infos</h2>
+            <table>
+            <tr>
+                <th>EventID</th>
+                <th> Name</th>
+                <th> Standort</th>
+                <th> Datum</th>
+                <th> Thema</th>
+            </tr>
+            <tr>
+                <td>${data.result._id}</td>
+                <td>${data.result.name}</td>
+                <td>${data.result.location}</td>
+                <td>${data.result.date}</td>
+                <td>${data.result.topic}</td>
+            </tr>
+        </table>
+        <h2>Sets</h2>
+        <table>
+            <tr>
+                <th>SetID</th>
+                <th> Name</th>
+                <th> Beschreibung</th>
+            </tr>
+        ${data.result.sets.map((set)=>{
+            return `
+            <tr>
+                <td>${set._id}</td>
+                <td>${set.name}</td>
+                <td>${set.description}</td>
+            </tr>`;
+        }).join('')}
+            </table>
+            `;
+        }else if(displaystyle === 'sets'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
@@ -126,11 +266,11 @@ function get(uri, displaystyle) {
                         <td>${set._id}</td>
                         <td>${set.name}</td>
                         <td>${set.description}</td>
-                    </tr>`
+                    </tr>`;
                 }).join('')}
             </table>
             `;
-        }else if(displaystyle[0]==='events'){
+        }else if(displaystyle ==='events'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
@@ -148,11 +288,11 @@ function get(uri, displaystyle) {
                         <td>${event.location}</td>
                         <td>${event.date}</td>
                         <td>${event.topic}</td>
-                    </tr>`
+                    </tr>`;
                 }).join('')}
             </table>
             `;
-        }else if(displaystyle[0]==='requests'){
+        }else if(displaystyle ==='requests'){
             document.getElementById("output").innerHTML = `${data.result.length>0 ? data.result.length : 'Kein' } Ergebnis${data.result.length>1 ? 'se' : ''}.
             <table>
                 <tr>
@@ -196,7 +336,7 @@ function get(uri, displaystyle) {
                         <td>${request.valence}</td>
                         <td>${request.tempo}</td>
                         
-                    </tr>`
+                    </tr>`;
                 }).join('')}
             </table>
             `;

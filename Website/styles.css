@@ -44,10 +44,12 @@ input[type=text] {
 .navigation ul li a {
     text-decoration: none;
 }
-.operations {
-    background-color: rgb(238, 238, 238);
+.operation {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
+}
+.operation form h2 {
+    /* text-transform: uppercase; */
 }
 p {
    padding: 5px;
@@ -65,4 +67,14 @@ p {
 }
 form {
     display: none;
+    margin: 2.5em;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 20px 1em;
+}
+table th {
+    font-weight: bolder;
+    text-align: left;
+    min-width: 100px;
 }
