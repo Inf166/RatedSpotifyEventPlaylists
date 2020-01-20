@@ -4,6 +4,7 @@ body {
     grid-template-rows: 92vh 100vh;
     /* font-family: 'Oswald', sans-serif; */
     font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
 }
 fieldset {
     border: none;
@@ -19,7 +20,16 @@ input[type=button] {
     padding: 10px;
     margin: 5px;
     margin-top: 15px;
-}   
+} 
+input[type=button]:hover {
+    background-image: linear-gradient(#ecb500,#e26d00);  
+}
+input[type=button]:focus {
+    -webkit-box-shadow: 0px 15px 30px -11px rgba(0,0,0,0.45);
+    -moz-box-shadow: 0px 15px 30px -11px rgba(0,0,0,0.45);
+    box-shadow: 0px 15px 30px -11px rgba(0,0,0,0.45);
+    border: #d3660070 solid 3px;
+}
 input[type=button]:active {
     background-image: linear-gradient(#ff7b00,#ffc400);
 }
@@ -31,6 +41,9 @@ input[type=text] {
     width: 500px;
     font-size: 16px;
 }
+input[type=text]:focus {
+    border: #ff7b0070 solid 3px;
+}
 .navigation {
     background-color: rgba(238, 238, 238, 0.275);
     grid-column: 1 / 2;
@@ -40,6 +53,7 @@ input[type=text] {
 .navigation h1 {
     color: #ff7b00ca;
     text-transform: uppercase;
+    font-size: 45px;
 }
 .navigation ul {
     list-style: none;
@@ -50,6 +64,9 @@ input[type=text] {
 a {
     text-decoration: none;
     color: #ff7b00;
+}
+a:focus {
+    text-decoration: underline;
 }
 .operation {
     grid-column: 2 / 3;
