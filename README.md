@@ -77,4 +77,26 @@ Für eine Übersicht und die Definition/Beschreibung von Ressourcen siehe [Anwen
 * [`DELETE` Löscht einen bestimmten Request.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/DELETE_id.md)
 
 ## Website / Client Demo
-Folgt.
+### UseCase  
+Für die einfache und übersichtliche Nutzung der RestAPI wurde ein WebClient erstellt welcher die Abfragen einfach über Formulare ermöglicht und die Ausgaben für Menschen einfach verständlich ausgibt.
+Es wurde besonders auf die leichte Verständlichkeit für den normal Benutzer geachtet.
+### Navigation  
+Mögliche Operationen sind:  
+* Songvorschlag machen
+* Event erstellen
+* Set erstellen
+* Suche
+* Löschen (nur für die Entwickler gedacht, sollte eigentlich beim Fertigprodukt nicht mehr für jeden möglich sein)
+### Operationen  
+#### Songvorschlag machen
+Um einen Songvorschlag zu tätigen benötigt der Nutzer nur die zugehörige SetID(kann über die Suche erhalten werden oder über externe Quellen weitergegeben werdne) und die Spotify TrackID. Die TrackID kann direkt aus dem Browserfenster von Spotify über einen Rechtsklick auf den Song kopiert werden. Ein Link zu Spotify wird hier auch angezeigt. Der Klick auf den Link öffnet einen neuen Tab.  
+#### Event erstellen  
+Um ein Event zu erstellen benötigt man nur einen Namen, das Thema und ein Datum (muss über das Format ttmmyyyy angegeben werden - dies wird noch in Zukunft verbessert) und die Location. 
+#### Set erstellen  
+Um ein Set zu erstellen benötigt man die zugehörige EventID, den Setnamen, und eine Kurzbeschreibung (Zum Beispiel: Das Genre, Die gewünschten Künstler,...).  
+#### Suche  
+Es wird über einen Radiobutton der Typ des gesuchten Objekts und Optional die gewünschte Ausgabereihenfolge für die Requests eines Sets gewählt. Anschließend kann eine ID angegeben werden. Die Reihenfolgensortierung funktioniert nur wenn ein Set gewählt und eine ID angegeben wurde. 
+#### Löschen
+Es wird über einen Radiobutton der Typ des zulöschenden Objekts gewählt und im Anschluss die ID angegeben.  
+### Output  
+Das Outputfenster bietet eine leicht verstädnliche Rückmeldung an den Nutzer ob ein DELETE oder POST Request funktioniert hat oder ob es einen Fehler gab - Bei GET Requests wird die Ausgabe in Form von Tabellen mit der API
