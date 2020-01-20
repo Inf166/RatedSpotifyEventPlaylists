@@ -1,4 +1,4 @@
-var serviceURL = "http://localhost:3000/";
+var serviceURL = "http://lowtrust.club:3000/";
 const notes = [ 'C', 'C#', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A', 'b', 'B' ];
 
 // Action Listner für die Navigation
