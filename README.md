@@ -23,7 +23,7 @@ Bei POST, PATCH und DELETE Requests muss die Anfrage im _body_ einen JSON-Payloa
 Jeder Response enthält ein `status` und (wenn die Anfrage erfolgreich ist) ein `result` Objekt. `result` ist ein einfaches Objekt bei Einzelsatzanfragen und ein Array bei Listenanfragen. Das `status` Objekt enthält den HTTP `status_code` und den `status_text`. Wenn bei der Anfrage ein Fehler aufgetreten ist und kein `result` Objekt in der Antwort enthalten ist, gibt es stattdessen ein `error` Objekt mit näheren Informationen zum Fehler.  
 Die Antwort auf einen GET-Request an `/events` könnte zum Beispiel so aussehen:
 
-```javascript
+```json
 {
   "status": {
     "status_code": 200,
