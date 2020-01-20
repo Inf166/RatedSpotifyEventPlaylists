@@ -51,7 +51,7 @@ Gibt ein einzelnes [Set](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/
 				"tempo": 132.003,
 				"key": 2
 			}
-		],
+		]
 	}
 }
 ```

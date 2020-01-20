@@ -37,7 +37,7 @@ Gibt ein einzelnes [Event](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blo
             "name": "Weska",
             "description": "Just a boi playin some music"
             }
-        ],
+        ]
     }
 }
 ```

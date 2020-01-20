@@ -27,6 +27,6 @@ Keine
 			"date": 18012019,
 			"topic": "TECHNOOO"
 		}
-	],
+	]
 }
 ```

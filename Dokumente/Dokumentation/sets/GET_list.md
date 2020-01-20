@@ -38,6 +38,6 @@ Keine
 			"name": "Weska",
 			"description": "Just a boi playin some music"
 		}
-	],
+	]
 }
 ```
