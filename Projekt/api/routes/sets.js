@@ -12,13 +12,13 @@ const querySelectRequests = '_id track_id name artist duration_ms popularity aco
 router.get('/', (req, res, next) => {
 	Set.find().select(querySelect).populate('event', 'name').exec().then(sets => {
 		res.status(200).json(({
-			message: 'OK',
+			status: { status_code: 200, status_text: 'OK' },
 			result: sets
 		}));
 	}).catch(err => {
 		console.log(err);
 		res.status(500).json({
-			message: 'Internal Server Error',
+			status: { status_code: 500, status_text: 'Internal Server Error' },
 			error: err
 		});
 	});
@@ -35,7 +35,7 @@ router.get('/:setID', (req, res, next) => {
 
 					Request.find({ set: mongoose.Types.ObjectId(setID) }).select(querySelectRequests).sort(querySort).exec().then(requests => {
 						res.status(200).json({
-							message: 'OK',
+							status: { status_code: 200, status_text: 'OK' },
 							result: {
 								_id: set._id,
 								event: set.event,
@@ -47,32 +47,32 @@ router.get('/:setID', (req, res, next) => {
 					}).catch(err => {
 						console.log(err);
 						res.status(500).json({
-							message: 'Internal Server Error',
+							status: { status_code: 500, status_text: 'Internal Server Error' },
 							error: err
 						});
 					});
 				} else {
 					res.status(404).json({
-						message: 'Not Found',
+						status: { status_code: 404, status_text: 'Not Found' },
 						error: 'Invalid Property: setID'
 					});
 				}
 			}).catch(err => {
 				console.log(err);
 				res.status(500).json({
-					message: 'Internal Server Error',
+					status: { status_code: 500, status_text: 'Internal Server Error' },
 					error: err
 				});
 			});
 		} else {
 			res.status(400).json({
-				message: 'Bad Request',
+				status: { status_code: 400, status_text: 'Bad Request' },
 				error: 'Invalid Property: setID'
 			});
 		}
 	} else {
 		res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: setID'
         });
 	}
@@ -84,7 +84,7 @@ router.post('/', (req, res, next) => {
             Event.findById(eventID).then(event => {
                 if (!event) {
                     return res.status(404).json({
-                        message: 'Not Found',
+                        status: { status_code: 404, status_text: 'Not Found' },
                         error: 'Invalid Property: eventID'
                     });
 				}
@@ -99,7 +99,7 @@ router.post('/', (req, res, next) => {
 			
 					set.save().then(result => {
 						res.status(201).json({
-							message: 'OK',
+							status: { status_code: 200, status_text: 'OK' },
 							result: { 
 								_id: result.id,
 								event: result.event,
@@ -110,7 +110,7 @@ router.post('/', (req, res, next) => {
 					}).catch(err => {
 						console.log(err);
 						res.status(500).json({
-							message: 'Internal Server Error',
+							status: { status_code: 500, status_text: 'Internal Server Error' },
 							error: err
 						});
 					});
@@ -123,26 +123,26 @@ router.post('/', (req, res, next) => {
 						missing.push('description');
 					}
 					res.status(400).json({
-						message: 'Bad Request',
+						status: { status_code: 400, status_text: 'Bad Request' },
 						error: 'Missing Property: ' + missing.join(', ')
 					});
 				}
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
-                    message: 'Internal Server Error',
+                    status: { status_code: 500, status_text: 'Internal Server Error' },
                     error: err
                 });
             });
 		} else {
 			res.status(400).json({
-                message: 'Bad Request',
+                status: { status_code: 400, status_text: 'Bad Request' },
                 error: 'Invalid Property: eventID'
             });
 		}
 	} else {
         res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: eventID'
         });
 	}
@@ -159,31 +159,31 @@ router.patch('/:setID', (req, res, next) => {
 			Set.updateOne({ _id: mongoose.Types.ObjectId(setID) }, { $set: updateVariables }).exec().then(result => {
 				if (result.nModified > 0) {
 					res.status(200).json({
-						message: 'OK',
+						status: { status_code: 200, status_text: 'OK' },
 						result: 'Set Updated.'
 					});
 				} else {
 					res.status(400).json({
-						message: 'Bad Request',
+						status: { status_code: 400, status_text: 'Bad Request' },
 						result: 'Invalid Property: setID'
 					});
 				}
 			}).catch(err => {
 				console.log(err);
 				res.status(500).json({
-					message: 'Internal Server Error',
+					status: { status_code: 500, status_text: 'Internal Server Error' },
 					error: err
 				});
 			});
 		} else {
 			res.status(400).json({
-				message: 'Bad Request',
+				status: { status_code: 400, status_text: 'Bad Request' },
 				error: 'Invalid Property: setID'
 			});
 		}
 	} else {
 		res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: setID'
         });
 	}
@@ -195,31 +195,31 @@ router.delete('/', (req, res, next) => {
 			Set.deleteOne({ _id: mongoose.Types.ObjectId(setID) }).exec().then(result => {
 				if (result.deletedCount > 0) {
 					res.status(200).json({
-						message: 'OK',
+						status: { status_code: 200, status_text: 'OK' },
 						result: 'Set Deleted.'
 					});
 				} else {
 					res.status(400).json({
-						message: 'Bad Request',
+						status: { status_code: 400, status_text: 'Bad Request' },
 						result: 'Invalid Set ID.'
 					});
 				}
 			}).catch(err => {
 				console.log(err);
 				res.status(500).json({
-					message: 'Internal Server Error',
+					status: { status_code: 500, status_text: 'Internal Server Error' },
 					error: err
 				});
 			});
 		} else {
 			res.status(400).json({
-				message: 'Bad Request',
+				status: { status_code: 400, status_text: 'Bad Request' },
 				result: 'Invalid Set ID.'
 			});
 		}
 	} else {
 		res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: setID'
         });
 	}

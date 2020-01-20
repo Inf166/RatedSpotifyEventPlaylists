@@ -17,13 +17,13 @@ const REGEX = /^(https:\/\/open.spotify.com\/track\/|spotify:track:)([a-zA-Z0-9]
 router.get('/', (req, res, next) => {
     Request.find().select(querySelect).populate('set', 'name').exec().then(requests => {
         res.status(200).json(({
-            message: 'OK',
+            status: { status_code: 200, status_text: 'OK' },
             result: requests
         }));
     }).catch(err => {
         console.log(err);
         res.status(500).json({
-            message: 'Internal Server Error',
+            status: { status_code: 500, status_text: 'Internal Server Error' },
             error: err
         });
     });
@@ -35,31 +35,31 @@ router.get('/:requestID', (req, res, next) => {
             Request.findById(requestID).select(querySelect).populate('set', 'name').exec().then(request => {
                 if (request) {
                     res.status(200).json({
-                        message: 'OK',
+                        status: { status_code: 200, status_text: 'OK' },
                         result: request
                     });
                 } else {
                     res.status(404).json({
-                        message: 'Not Found',
+                        status: { status_code: 404, status_text: 'Not Found' },
                         error: 'Invalid Property: requestID'
                     });
                 }
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
-                    message: 'Internal Server Error',
+                    status: { status_code: 500, status_text: 'Internal Server Error' },
                     error: err
                 });
             });
         } else {
             res.status(400).json({
-                message: 'Bad Request',
+                status: { status_code: 400, status_text: 'Bad Request' },
                 error: 'Invalid Property: requestID'
             });
         }
 	} else {
 		res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: requestID'
         });
 	}
@@ -71,7 +71,7 @@ router.post('/', (req, res, next) => {
             Set.findById(setID).then(set => {
                 if (!set) {
                     return res.status(404).json({
-                        message: 'Not Found',
+                        status: { status_code: 404, status_text: 'Not Found' },
                         error: 'Invalid Property: setID'
                     });
                 }
@@ -84,7 +84,7 @@ router.post('/', (req, res, next) => {
                             if (count > 0) {
                                 Request.findOneAndUpdate( { set: mongoose.Types.ObjectId(setID), track_id: trackID }, { $inc: { votes: 1 } }, { new: true }).then(request => {
                                     res.status(200).json({
-                                        message: 'OK',
+                                        status: { status_code: 200, status_text: 'OK' },
                                         result: { 
                                             _id: request.id,
                                             set: request.set,
@@ -109,7 +109,7 @@ router.post('/', (req, res, next) => {
                                 }).catch(err => {
                                     console.log(err);
                                     res.status(500).json({
-                                        message: 'Internal Server Error',
+                                        status: { status_code: 500, status_text: 'Internal Server Error' },
                                         error: err
                                     });
                                 });
@@ -138,7 +138,7 @@ router.post('/', (req, res, next) => {
                         
                                         request.save().then(result => {
                                             res.status(201).json({
-                                                message: 'OK',
+                                                status: { status_code: 200, status_text: 'OK' },
                                                 result: { 
                                                     _id: result.id,
                                                     set: result.set,
@@ -163,26 +163,26 @@ router.post('/', (req, res, next) => {
                                         }).catch(err => {
                                             console.log(err);
                                             res.status(500).json({
-                                                message: 'Internal Server Error',
+                                                status: { status_code: 500, status_text: 'Internal Server Error' },
                                                 error: err
                                             });
                                         });
                                     }).catch(err => {
                                         if (err == 'invalidTrackID' || err.message == 'Bad Request') {
                                             res.status(400).json({
-                                                message: 'Bad Request',
+                                                status: { status_code: 400, status_text: 'Bad Request' },
                                                 error: 'Invalid Property: trackID'
                                             });
                                         } else {
                                             res.status(500).json({
-                                                message: 'Internal Server Error',
+                                                status: { status_code: 500, status_text: 'Internal Server Error' },
                                                 error: err.message
                                             });
                                         }
                                     });
                                 }).catch(err => {
                                     res.status(500).json({
-                                        message: 'Internal Server Error',
+                                        status: { status_code: 500, status_text: 'Internal Server Error' },
                                         error: err
                                     });
                                 });
@@ -190,38 +190,38 @@ router.post('/', (req, res, next) => {
                         }).catch(err => {
                             console.log(err);
                             res.status(500).json({
-                                message: 'Internal Server Error',
+                                status: { status_code: 500, status_text: 'Internal Server Error' },
                                 error: err
                             });
                         });
                     } else {
                         res.status(400).json({
-                            message: 'Bad Request',
+                            status: { status_code: 400, status_text: 'Bad Request' },
                             error: 'Invalid Property: trackID'
                         });
                     }
                 } else {
                     res.status(400).json({
-                        message: 'Bad Request',
+                        status: { status_code: 400, status_text: 'Bad Request' },
                         error: 'Missing Property: trackID'
                     });
                 }
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
-                    message: 'Internal Server Error',
+                    status: { status_code: 500, status_text: 'Internal Server Error' },
                     error: err
                 });
             });
         } else {
             res.status(400).json({
-                message: 'Bad Request',
+                status: { status_code: 400, status_text: 'Bad Request' },
                 error: 'Invalid Property: setID'
             });
         }
     } else {
         res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: setID'
         });
     }
@@ -233,31 +233,31 @@ router.delete('/', (req, res, next) => {
             Request.deleteOne({ _id: mongoose.Types.ObjectId(requestID) }).exec().then(result => {
                 if (result.deletedCount > 0) {
                     res.status(200).json({
-                        message: 'OK',
+                        status: { status_code: 200, status_text: 'OK' },
                         result: 'Request Deleted.'
                     });
                 } else {
                     res.status(400).json({
-                        message: 'Bad Request',
+                        status: { status_code: 400, status_text: 'Bad Request' },
                         result: 'Invalid Request ID.'
                     });
                 }
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
-                    message: 'Internal Server Error',
+                    status: { status_code: 500, status_text: 'Internal Server Error' },
                     error: err
                 });
             });
         } else {
             res.status(400).json({
-                message: 'Bad Request',
+                status: { status_code: 400, status_text: 'Bad Request' },
                 result: 'Invalid Request ID.'
             });
         }
 	} else {
 		res.status(400).json({
-            message: 'Bad Request',
+            status: { status_code: 400, status_text: 'Bad Request' },
             error: 'Missing Property: requestID'
         });
 	}
