@@ -37,13 +37,14 @@ Die Antwort auf einen GET-Request an `/events` könnte zum Beispiel so aussehen:
       "date": 18012019,
       "topic": "TECHNOOO"
     }
-  ],
+  ]
 }
 ```
 
 ### HTTP Response Codes / HTTP Antwort Codes ( Status Codes )
 Jeder Response wird mit einem der folgenden HTTP Status Codes beantwortet:
 * `200` `OK` Die Anfrage war erfolgreich
+* `201` `Created` Die Anfrage war erfolgreich und es wurde eine neue Ressource erstellt
 * `400` `Bad Request` Die Anfrage war ungültig (Parameter, Daten, etc.)
 * `404` `Not Found` Es wurde versucht auf eine Ressource zuzugreifen, die nicht existiert
 * `500` `Internal Server Error` Beim Verarbeiten der Anfrage ist ein Error aufgetreten
