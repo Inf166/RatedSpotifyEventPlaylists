@@ -79,7 +79,7 @@ Für eine Übersicht und die Definition/Beschreibung von Ressourcen siehe [Anwen
 
 ## Website / Client Demo
 ### Usecase  
-Für die einfache und übersichtliche Nutzung der Rest API wurde eine Website erstellt, welche die verschiedenen Abfragen über Formulare und HTTP Requests ermöglicht und die Antworten verarbeitet, sodass sie für Menschen lesbar/ersichtlich sind. Es wurde besonders auf Einfachheit und Verständlichkeit für den durchschnittlichen Benutzer geachtet.  
+Für die einfache und übersichtliche Nutzung der Rest API wurde eine Website erstellt, welche die verschiedenen Anfragen über Formulare und HTTP Requests ermöglicht und die Antworten verarbeitet, sodass sie für Menschen lesbar/ersichtlich sind. Es wurde besonders auf Einfachheit und Verständlichkeit für den durchschnittlichen Benutzer geachtet.  
 
 ### Navigation  
 Mögliche Operationen sind:  
