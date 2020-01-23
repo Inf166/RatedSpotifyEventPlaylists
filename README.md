@@ -37,13 +37,14 @@ Die Antwort auf einen GET-Request an `/events` könnte zum Beispiel so aussehen:
       "date": 18012019,
       "topic": "TECHNOOO"
     }
-  ],
+  ]
 }
 ```
 
 ### HTTP Response Codes / HTTP Antwort Codes ( Status Codes )
 Jeder Response wird mit einem der folgenden HTTP Status Codes beantwortet:
 * `200` `OK` Die Anfrage war erfolgreich
+* `201` `Created` Die Anfrage war erfolgreich und es wurde eine neue Ressource erstellt
 * `400` `Bad Request` Die Anfrage war ungültig (Parameter, Daten, etc.)
 * `404` `Not Found` Es wurde versucht auf eine Ressource zuzugreifen, die nicht existiert
 * `500` `Internal Server Error` Beim Verarbeiten der Anfrage ist ein Error aufgetreten
@@ -77,26 +78,32 @@ Für eine Übersicht und die Definition/Beschreibung von Ressourcen siehe [Anwen
 * [`DELETE` Löscht einen bestimmten Request.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/DELETE_id.md)
 
 ## Website / Client Demo
-### UseCase  
-Für die einfache und übersichtliche Nutzung der RestAPI wurde ein WebClient erstellt welcher die Abfragen einfach über Formulare ermöglicht und die Ausgaben für Menschen einfach verständlich ausgibt.
-Es wurde besonders auf die leichte Verständlichkeit für den normal Benutzer geachtet.
+### Usecase  
+Für die einfache und übersichtliche Nutzung der Rest API wurde eine Website erstellt, welche die verschiedenen Anfragen über Formulare und HTTP Requests ermöglicht und die Antworten verarbeitet, sodass sie für Menschen lesbar/ersichtlich sind. Es wurde besonders auf Einfachheit und Verständlichkeit für den durchschnittlichen Benutzer geachtet.  
+
 ### Navigation  
 Mögliche Operationen sind:  
-* Songvorschlag machen
 * Event erstellen
 * Set erstellen
-* Suche
-* Löschen (nur für die Entwickler gedacht, sollte eigentlich beim Fertigprodukt nicht mehr für jeden möglich sein)
+* Request/Song-Vorschlag erstellen
+* Suchen
+* Löschen  
+
 ### Operationen  
-#### Songvorschlag machen
-Um einen Songvorschlag zu tätigen benötigt der Nutzer nur die zugehörige SetID(kann über die Suche erhalten werden oder über externe Quellen weitergegeben werdne) und die Spotify TrackID. Die TrackID kann direkt aus dem Browserfenster von Spotify über einen Rechtsklick auf den Song kopiert werden. Ein Link zu Spotify wird hier auch angezeigt. Der Klick auf den Link öffnet einen neuen Tab.  
 #### Event erstellen  
-Um ein Event zu erstellen benötigt man nur einen Namen, das Thema und ein Datum (muss über das Format ttmmyyyy angegeben werden - dies wird noch in Zukunft verbessert) und die Location. 
+Um ein Event zu erstellen benötigt man einen Namen, ein Thema, ein Datum (Format: ttmmyyyy) und eine Location.  
+
 #### Set erstellen  
-Um ein Set zu erstellen benötigt man die zugehörige EventID, den Setnamen, und eine Kurzbeschreibung (Zum Beispiel: Das Genre, Die gewünschten Künstler,...).  
-#### Suche  
-Es wird über einen Radiobutton der Typ des gesuchten Objekts und Optional die gewünschte Ausgabereihenfolge für die Requests eines Sets gewählt. Anschließend kann eine ID angegeben werden. Die Reihenfolgensortierung funktioniert nur wenn ein Set gewählt und eine ID angegeben wurde. 
+Um ein Set zu erstellen benötigt man eine EventID, um zu bestimmen zu welchem Event das Set gehört, einen Namen und eine Kurzbeschreibung (Beispiel: Genre, gewünschte Künstler, ...).  
+
+#### Request/Song-Vorschlag erstellen
+Um einen Song-Vorschlag zu erstellen benötigt man eine SetID, um den jeweiligen Track einem Set zuweisen zu können, sowie eine Spotify TrackID. Die SetID kann bspw. über die Suche ermittelt, oder durch externe Quellen erhalten werden. Die TrackID kann direkt aus Spotify entnommen werden. Mögliche Variationen sind dabei die Track-URL, sowie die eindeutige Track-URI.
+
+#### Suchen  
+Über einen Radio-Button (Auswahlbutton) kann der Typ der gesuchten Ressource und optional auch die gewünschte Filterung/Sortierung für Requests innerhalb eines Sets bestimmt werden. Für Einzelsatzanfragen kann außerdem eine ID angegeben werden. Die Filterung/Sortierung für Requests innerhalb eines Sets ist nur bei einer Einzelsatzanfrage möglich.  
+
 #### Löschen
-Es wird über einen Radiobutton der Typ des zulöschenden Objekts gewählt und im Anschluss die ID angegeben.  
-### Output  
-Das Outputfenster bietet eine leicht verstädnliche Rückmeldung an den Nutzer ob ein DELETE oder POST Request funktioniert hat oder ob es einen Fehler gab - Bei GET Requests wird die Ausgabe in Form von Tabellen mit der API
+Über einen Radio-Button (Auswahlbutton) kann der Typ der zu löschenden Ressource bestimmt und im Anschluss die zugehörige ID angegeben werden.  
+
+### Ausgabe  
+Das Ausgabefenster gibt dem Nutzer eine leichte verständliche Rückmeldung darüber, ob eine POST oder DELETE Request erfolgreich war oder ob dabei ein Fehler aufgetreten ist. Bei GET Requests erfolgt die Ausgabe der Antwort von der API in Form von Tabellen.
