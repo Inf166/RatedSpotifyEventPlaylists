@@ -60,21 +60,21 @@ Für eine Übersicht und die Definition/Beschreibung von Ressourcen siehe [Anwen
 #### [Events](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/README.md)
 * [`GET` Liefert eine Liste aller Events.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/GET_list.md)
 * [`GET` Liefert Informationen zu einen bestimmten Event.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/GET_id.md)
-* [`POST` Fügt ein neues Event hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/POST_id.md)
+* [`POST` Fügt ein neues Event hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/POST_create.md)
 * [`PATCH` Aktualisiert Informationen eines bestimmten Events.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/PATCH_id.md)
 * [`DELETE` Löscht ein bestimmtes Event.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/events/DELETE_id.md)
 
 #### [Sets](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/README.md)
 * [`GET` Liefert eine Liste aller Sets.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/GET_list.md)
 * [`GET` Liefert Informationen zu einen bestimmten Set.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/GET_id.md)
-* [`POST` Fügt ein neues Set hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/POST_id.md)
+* [`POST` Fügt ein neues Set hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/POST_create.md)
 * [`PATCH` Aktualisiert Informationen eines bestimmten Sets.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/PATCH_id.md)
 * [`DELETE` Löscht ein bestimmtes Set.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/sets/DELETE_id.md)
   
 #### [Requests](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/README.md)
 * [`GET` Liefert eine Liste aller Requests.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/GET_list.md)
 * [`GET` Liefert Informationen zu einen bestimmten Request.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/GET_id.md)
-* [`POST` Fügt einen neuen Request hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/POST_id.md)
+* [`POST` Fügt einen neuen Request hinzu.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/POST_create.md)
 * [`DELETE` Löscht einen bestimmten Request.](https://github.com/Inf166/GDW1920_Mai_Dahlke_Inci/blob/master/Dokumente/Dokumentation/requests/DELETE_id.md)
 
 ## Website / Client Demo
