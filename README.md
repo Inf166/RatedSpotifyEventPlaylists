@@ -1,3 +1,12 @@
+<p>
+    <a href="https://badges.pufler.dev" alt="https://badges.pufler.dev">
+        <img alt="https://badges.pufler.dev/updated/inf166/api-rated-spotify-event-playlists?style=for-the-badge&color=yellow"    src="https://badges.pufler.dev/updated/inf166/api-rated-spotify-event-playlists?style=for-the-badge&color=yellow">
+    </a>
+    <a href="https://badges.pufler.dev" alt="https://badges.pufler.dev">
+        <img alt="https://badges.pufler.dev/created/inf166/api-rated-spotify-event-playlists?style=for-the-badge&color=green" src="https://badges.pufler.dev/created/inf166/api-rated-spotify-event-playlists?style=for-the-badge&color=green">
+    </a>
+</p>
+
 # Grundlagen des Webs - Praxis/Workshop Teil
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
